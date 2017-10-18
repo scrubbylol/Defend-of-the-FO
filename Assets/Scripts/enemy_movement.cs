@@ -8,9 +8,11 @@ public class enemy_movement : MonoBehaviour {
 
 	public Vector2[] movePositions = new Vector2[5];
 
+	private game_manager gm;
+
 	// Use this for initialization
 	void Start () {
-		
+		gm = GameObject.Find ("GameManager").GetComponent<game_manager>();
 	}
 	
 	// Update is called once per frame
@@ -28,6 +30,14 @@ public class enemy_movement : MonoBehaviour {
 		if (transform.position.x == movePositions[movePositions.Length-1].x &&
 			transform.position.y == movePositions[movePositions.Length-1].y) {
 			Destroy (this.gameObject);
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D col) {
+		Debug.Log (col.gameObject.name);
+		if (col.gameObject.tag.Equals ("End")) {
+			gm.lives -= 1;
+			gm.livesText.text = "Lives: " + System.Convert.ToString (gm.lives);
 		}
 	}
 }
