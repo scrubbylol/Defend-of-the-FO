@@ -36,8 +36,18 @@ public class enemy_movement : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col) {
 		Debug.Log (col.gameObject.name);
 		if (col.gameObject.tag.Equals ("End")) {
-			gm.lives -= 1;
-			gm.livesText.text = "Lives: " + System.Convert.ToString (gm.lives);
+			if (gm.lives > 0) {
+				gm.lives -= 1;
+				gm.livesText.text = "Lives: " + System.Convert.ToString (gm.lives);
+
+				if (gm.lives == 0) {
+					gameOver ();
+				}
+			}
 		}
+	}
+
+	void gameOver() {
+		GameObject.Find ("GameOver_Text").GetComponent<Animation> ().Play ();
 	}
 }
