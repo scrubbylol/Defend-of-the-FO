@@ -19,13 +19,14 @@ public class BulletBehaviour : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         // 1 
         float timeInterval = Time.time - startTime;
        // gameObject.transform.position = Vector3.Lerp(startPosition, targetPosition, timeInterval * speed / distance);
+		gameObject.transform.position = Vector2.MoveTowards (startPosition, targetPosition, timeInterval * speed / distance);
 
         // 2 
-        if (gameObject.transform.position.Equals(targetPosition))
+		if (gameObject.transform.position.x == targetPosition.x) 
         {
             if (target != null)
             {
