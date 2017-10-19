@@ -10,9 +10,13 @@ public class enemy_movement : MonoBehaviour {
 
 	private game_manager gm;
 
+	Animator anim;
+
 	// Use this for initialization
 	void Start () {
 		gm = GameObject.Find ("GameManager").GetComponent<game_manager>();
+
+		anim = GetComponent<Animator> ();
 	}
 	
 	// Update is called once per frame
@@ -25,11 +29,6 @@ public class enemy_movement : MonoBehaviour {
 			for (int i = 0; i < movePositions.Length-1; i++) {
 				movePositions [i] = movePositions [i + 1];
 			}
-		}
-
-		if (transform.position.x == movePositions[movePositions.Length-1].x &&
-			transform.position.y == movePositions[movePositions.Length-1].y) {
-			Destroy (this.gameObject);
 		}
 	}
 

@@ -22,7 +22,7 @@ public class BulletBehaviour : MonoBehaviour {
 	void Update () {
         // 1 
         float timeInterval = Time.time - startTime;
-        gameObject.transform.position = Vector3.Lerp(startPosition, targetPosition, timeInterval * speed / distance);
+       // gameObject.transform.position = Vector3.Lerp(startPosition, targetPosition, timeInterval * speed / distance);
 
         // 2 
         if (gameObject.transform.position.Equals(targetPosition))
