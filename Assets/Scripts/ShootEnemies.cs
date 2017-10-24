@@ -16,10 +16,31 @@ public class ShootEnemies : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Time.time - lastShotTime > 0.3)
+        GameObject target = null;
+        // 1
+        float minimalEnemyDistance = float.MaxValue;
+        foreach (GameObject enemy in enemiesInRange)
         {
-            Shoot();
-            lastShotTime = Time.time;
+            float distanceToGoal = enemy.GetComponent<enemy_movement>().distanceToGoal();
+            if (distanceToGoal < minimalEnemyDistance)
+            {
+                target = enemy;
+                minimalEnemyDistance = distanceToGoal;
+            }
+        }
+        // 2
+        if (target != null)
+        {
+            if (Time.time - lastShotTime > 0.3)
+            {
+                Shoot(target.GetComponent<Collider2D>());
+                lastShotTime = Time.time;
+            }
+            // 3
+            Vector3 direction = gameObject.transform.position - target.transform.position;
+            gameObject.transform.rotation = Quaternion.AngleAxis(
+                Mathf.Atan2(direction.y, direction.x) * 180 / Mathf.PI,
+                new Vector3(0, 0, 1));
         }
         /*GameObject target = null;
         // 1
@@ -49,11 +70,11 @@ public class ShootEnemies : MonoBehaviour {
         }*/
     }
 
-    void Shoot()
+    void Shoot(Collider2D target)
     {
         // 1 
         Vector3 startPosition = gameObject.transform.position;
-        Vector3 targetPosition = new Vector3(0,0,0);
+        Vector3 targetPosition = target.transform.position;
         startPosition.z = bulletPrefab.transform.position.z;
         targetPosition.z = bulletPrefab.transform.position.z;
 
@@ -61,9 +82,10 @@ public class ShootEnemies : MonoBehaviour {
         GameObject newBullet = (GameObject)Instantiate(bulletPrefab);
         newBullet.transform.position = startPosition;
         BulletBehaviour bulletComp = newBullet.GetComponent<BulletBehaviour>();
+        bulletComp.target = target.gameObject;
         bulletComp.startPosition = startPosition;
         bulletComp.targetPosition = targetPosition;
-        
+
     }
 
     // 1
@@ -74,10 +96,15 @@ public class ShootEnemies : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log(other.gameObject.tag);
         // 2
         if (other.gameObject.tag.Equals("Enemy"))
         {
-            
+            Debug.Log("triggered");
+            enemiesInRange.Add(other.gameObject);
+            EnemyDestructionDelegate del =
+                other.gameObject.GetComponent<EnemyDestructionDelegate>();
+            del.enemyDelegate += OnEnemyDestroy;
         }
     }
     // 3
@@ -85,7 +112,10 @@ public class ShootEnemies : MonoBehaviour {
     {
         if (other.gameObject.tag.Equals("Enemy"))
         {
-            
+            enemiesInRange.Remove(other.gameObject);
+            EnemyDestructionDelegate del =
+                other.gameObject.GetComponent<EnemyDestructionDelegate>();
+            del.enemyDelegate -= OnEnemyDestroy;
         }
     }
 }

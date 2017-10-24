@@ -6,9 +6,10 @@ public class enemy_movement : MonoBehaviour {
 
 	public float speed = 5f;
 
-	public Vector2[] movePositions = new Vector2[5];
+	public Vector2[] movePositions = new Vector2[12];
 
-	private game_manager gm;
+    private int currentWaypoint = 0;
+    private game_manager gm;
 
 	Animator anim;
 
@@ -28,12 +29,13 @@ public class enemy_movement : MonoBehaviour {
 		if (transform.position.x == nextPosition.x && transform.position.y == nextPosition.y) {
 			for (int i = 0; i < movePositions.Length-1; i++) {
 				movePositions [i] = movePositions [i + 1];
-			}
+                currentWaypoint++;
+
+            }
 		}
 	}
 
 	void OnTriggerEnter2D(Collider2D col) {
-		Debug.Log (col.gameObject.name);
 		if (col.gameObject.tag.Equals ("End")) {
 			if (gm.lives > 0) {
 				gm.lives -= 1;
@@ -49,4 +51,19 @@ public class enemy_movement : MonoBehaviour {
 	void gameOver() {
 		GameObject.Find ("GameOver_Text").GetComponent<Animation> ().Play ();
 	}
+
+    public float distanceToGoal()
+    {
+        float distance = 10;
+        /*distance += Vector3.Distance(
+            gameObject.transform.position,
+            movePositions[currentWaypoint]);
+        for (int i = currentWaypoint; i < movePositions.Length - 1; i++)
+        {
+            Vector3 startPosition = movePositions[i];
+            Vector3 endPosition = movePositions[i + 1];
+            distance += Vector3.Distance(startPosition, endPosition);
+        }*/
+        return distance;
+    }
 }

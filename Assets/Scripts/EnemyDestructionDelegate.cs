@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemy_desturctio_delegate : MonoBehaviour {
+public class EnemyDestructionDelegate : MonoBehaviour {
 	public delegate void EnemyDelegate (GameObject enemy);
 	public EnemyDelegate enemyDelegate;
 	// Use this for initialization
