@@ -6,8 +6,8 @@ public class BulletBehaviour : MonoBehaviour {
     public float speed = 10;
     public int damage;
     public GameObject target;
-    public Vector3 startPosition;
-    public Vector3 targetPosition;
+	public Vector3 startPosition;
+	public Vector3 targetPosition;
 
     private float distance;
     private float startTime;
@@ -29,21 +29,15 @@ public class BulletBehaviour : MonoBehaviour {
         {
             if (target != null)
             {
-                Destroy(target);
-                // 3
-                /*Transform healthBarTransform = target.transform.FindChild("HealthBar");
-                HealthBar healthBar =
-                    healthBarTransform.gameObject.GetComponent<HealthBar>();
-                healthBar.currentHealth -= Mathf.Max(damage, 0);
-                // 4
+				Transform healthBarTransform = target.transform.FindChild("HealthBar");
+				HealthBar healthBar = healthBarTransform.gameObject.GetComponent<HealthBar>();
+				healthBar.currentHealth = healthBar.currentHealth - 30;
+				healthBar.Hit ();
+
                 if (healthBar.currentHealth <= 0)
                 {
                     Destroy(target);
-                    AudioSource audioSource = target.GetComponent<AudioSource>();
-                    AudioSource.PlayClipAtPoint(audioSource.clip, transform.position);
-
-                    gameManager.Gold += 50;
-                }*/
+                }
             }
             Destroy(gameObject);
         }
