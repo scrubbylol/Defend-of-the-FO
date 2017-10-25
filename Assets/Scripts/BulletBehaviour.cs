@@ -11,12 +11,13 @@ public class BulletBehaviour : MonoBehaviour {
 
     private float distance;
     private float startTime;
-    
+	private game_manager gm;
 
     // Use this for initialization
     void Start () {
         startTime = Time.time;
         distance = Vector3.Distance(startPosition, targetPosition);
+		gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
     }
 
     private void Update()
@@ -29,14 +30,20 @@ public class BulletBehaviour : MonoBehaviour {
         {
             if (target != null)
             {
-				Transform healthBarTransform = target.transform.FindChild("HealthBar");
+				Transform healthBarTransform = target.transform.Find("HealthBar");
 				HealthBar healthBar = healthBarTransform.gameObject.GetComponent<HealthBar>();
 				healthBar.currentHealth = healthBar.currentHealth - 30;
 				healthBar.Hit ();
 
+				gm.AddScore (7);
+
                 if (healthBar.currentHealth <= 0)
                 {
                     Destroy(target);
+					gm.AddCash (5);
+					if (!gm.CheckEnemiesAlive (1)) {
+						gm.StartCountDown ();
+					}
                 }
             }
             Destroy(gameObject);

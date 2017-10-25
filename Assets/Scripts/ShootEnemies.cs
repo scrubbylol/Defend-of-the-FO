@@ -96,11 +96,9 @@ public class ShootEnemies : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.gameObject.tag);
         // 2
         if (other.gameObject.tag.Equals("Enemy"))
         {
-            Debug.Log("triggered");
             enemiesInRange.Add(other.gameObject);
             EnemyDestructionDelegate del =
                 other.gameObject.GetComponent<EnemyDestructionDelegate>();

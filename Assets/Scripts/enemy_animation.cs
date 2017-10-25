@@ -7,13 +7,16 @@ public class enemy_animation: MonoBehaviour {
 	public Vector2[] movePositions = new Vector2[5];
 	Animator anim;
 
+	private game_manager gm;
+
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
+		gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if (transform.position.x == movePositions[0].x &&
 			transform.position.y == movePositions[0].y) {
 			anim.SetInteger ("state", 1);
@@ -34,6 +37,10 @@ public class enemy_animation: MonoBehaviour {
 			transform.position.y == movePositions[4].y) {
 		    anim.SetInteger ("state", 2);
 			Destroy (this.gameObject,anim.GetCurrentAnimatorStateInfo(0).length);
+
+			if (!gm.CheckEnemiesAlive (2)) {
+				gm.StartCountDown ();
+			}
 		}
 	}
 }

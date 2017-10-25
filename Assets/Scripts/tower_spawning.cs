@@ -7,9 +7,12 @@ public class tower_spawning : MonoBehaviour {
     public GameObject towerPrefab;
     private GameObject tower;
     Vector2 whereToSpawn;
+
+	private game_manager gm;
+
     // Use this for initialization
     void Start () {
-		
+		gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
 	}
 	
 	// Update is called once per frame
@@ -23,6 +26,7 @@ public class tower_spawning : MonoBehaviour {
                 tower = (GameObject)
                   Instantiate(towerPrefab, transform.position, Quaternion.identity);
 
+				gm.SubCash (30);
                 // TODO: Deduct gold
             }
         }
@@ -30,7 +34,7 @@ public class tower_spawning : MonoBehaviour {
 
     private bool canPlaceTower()
     {
-        return tower == null;
+		return tower == null && gm.cash > 30;
     }
     
 }
