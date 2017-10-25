@@ -8,14 +8,13 @@ public class BulletBehaviour : MonoBehaviour {
     public GameObject target;
 	public Vector3 startPosition;
 	public Vector3 targetPosition;
-
     private float distance;
     private float startTime;
 	private game_manager gm;
 
     // Use this for initialization
     void Start () {
-        startTime = Time.time;
+		startTime = Time.time;
         distance = Vector3.Distance(startPosition, targetPosition);
 		gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
     }
@@ -26,20 +25,25 @@ public class BulletBehaviour : MonoBehaviour {
         gameObject.transform.position = Vector3.Lerp(startPosition, targetPosition, timeInterval * speed / distance);
 
         // 2 
-        if (gameObject.transform.position.Equals(targetPosition))
+		if (gameObject.transform.position.Equals(targetPosition))
         {
             if (target != null)
             {
 				Transform healthBarTransform = target.transform.Find("HealthBar");
 				HealthBar healthBar = healthBarTransform.gameObject.GetComponent<HealthBar>();
 				healthBar.currentHealth = healthBar.currentHealth - 30;
+				if (healthBar.currentHealth < 0) {
+					healthBar.currentHealth = 0;
+				}
 				healthBar.Hit ();
-
 				gm.AddScore (7);
-
-                if (healthBar.currentHealth <= 0)
+			
+				if (healthBar.currentHealth <= 0)
                 {
-                    Destroy(target);
+					target.GetComponent<enemy_movement>().stopMove = 1;
+					target.GetComponent<Rigidbody2D> ().velocity = Vector3.zero;
+					target.GetComponent<Animator>().SetInteger("state",2);
+					Destroy (target,target.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
 					gm.AddCash (5);
 					if (!gm.CheckEnemiesAlive (1)) {
 						gm.StartCountDown ();

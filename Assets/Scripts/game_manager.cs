@@ -72,14 +72,11 @@ public class game_manager : MonoBehaviour {
 			countdownText.text = System.Convert.ToString (i);
 			yield return new WaitForSeconds (time);
 		}
-
 		countdownText.enabled = false;
-		yield return new WaitForSeconds (time);
-
 		waves += 1;
 		wavesText.text = "- Wave " + System.Convert.ToString (waves) + " -";
 		wavesText.gameObject.GetComponent<Animation> ().Play ();
-
+		yield return new WaitForSeconds (time);
 		spawner.allEnemiesSpawned = false;
 		spawner.enemiesToSpawn = 10;
 	}

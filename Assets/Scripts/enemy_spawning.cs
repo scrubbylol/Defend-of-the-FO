@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class enemy_spawning : MonoBehaviour {
 
-	public GameObject enemy;
+	public GameObject enemy1;
+	public GameObject enemy2;
 	Vector2 whereToSpawn;
 	public float spawnRate = 2f;
 	float nextSpwan = 0.0f;
@@ -27,7 +28,11 @@ public class enemy_spawning : MonoBehaviour {
 		if (Time.time > nextSpwan && enemiesToSpawn > 0 && !allEnemiesSpawned) {
 			nextSpwan = Time.time + spawnRate;
 			whereToSpawn = gameObject.transform.position;
-			Instantiate (enemy, whereToSpawn, Quaternion.identity);
+			if (gm.waves % 2 == 0) {
+				Instantiate (enemy2, whereToSpawn, Quaternion.identity);
+			} else {
+				Instantiate (enemy1, whereToSpawn, Quaternion.identity);
+			}
 			enemiesToSpawn -= 1;
 
 			if (enemiesToSpawn == 0) {

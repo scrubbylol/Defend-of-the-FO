@@ -33,8 +33,12 @@ public class ShootEnemies : MonoBehaviour {
         {
             if (Time.time - lastShotTime > 0.3)
             {
-                Shoot(target.GetComponent<Collider2D>());
-                lastShotTime = Time.time;
+				Transform healthBarTransform = target.transform.Find("HealthBar");
+				HealthBar healthBar = healthBarTransform.gameObject.GetComponent<HealthBar>();
+				if (healthBar.currentHealth > 0) {
+					Shoot (target.GetComponent<Collider2D> ());
+					lastShotTime = Time.time;
+				}
             }
             // 3
             Vector3 direction = gameObject.transform.position - target.transform.position;
