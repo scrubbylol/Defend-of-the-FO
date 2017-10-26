@@ -17,7 +17,7 @@ public class tower_spawning : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButtonDown(0))
+/*if (Input.GetMouseButtonDown(0))
         {
             //2
             if (canPlaceTower())
@@ -29,6 +29,20 @@ public class tower_spawning : MonoBehaviour {
 				gm.SubCash (30);
                 // TODO: Deduct gold
             }
+        }*/
+    }
+    void OnMouseUp()
+    {
+        //2
+        if (canPlaceTower())
+        {
+            //3
+            tower = (GameObject)
+              Instantiate(towerPrefab, transform.position, Quaternion.identity);
+            //4
+            gm.SubCash(30);
+
+            // TODO: Deduct gold
         }
     }
 
