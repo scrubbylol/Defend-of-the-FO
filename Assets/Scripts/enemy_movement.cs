@@ -34,8 +34,6 @@ public class enemy_movement : MonoBehaviour {
 
 				}
 			}
-		} else {
-			Debug.Log ("WTF");
 		}
 	}
 

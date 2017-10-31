@@ -8,6 +8,8 @@ public class ShootEnemies : MonoBehaviour {
     public GameObject bulletPrefab;
     private float lastShotTime;
 
+	public float attackSpeed;
+
     // Use this for initialization
     void Start () {
         enemiesInRange = new List<GameObject>();
@@ -22,7 +24,7 @@ public class ShootEnemies : MonoBehaviour {
         foreach (GameObject enemy in enemiesInRange)
         {
             float distanceToGoal = enemy.GetComponent<enemy_movement>().distanceToGoal();
-            if (distanceToGoal < minimalEnemyDistance)
+			if (distanceToGoal < minimalEnemyDistance)
             {
                 target = enemy;
                 minimalEnemyDistance = distanceToGoal;
@@ -31,20 +33,22 @@ public class ShootEnemies : MonoBehaviour {
         // 2
         if (target != null)
         {
-            if (Time.time - lastShotTime > 0.3)
+			if (Time.time - lastShotTime > attackSpeed)
             {
 				Transform healthBarTransform = target.transform.Find("HealthBar");
 				HealthBar healthBar = healthBarTransform.gameObject.GetComponent<HealthBar>();
-				if (healthBar.currentHealth > 0) {
+				if (healthBar.GetHealth () > 0) {
 					Shoot (target.GetComponent<Collider2D> ());
 					lastShotTime = Time.time;
+				} else {
+					target = null;
 				}
             }
             // 3
-            Vector3 direction = gameObject.transform.position - target.transform.position;
-            gameObject.transform.rotation = Quaternion.AngleAxis(
+            //Vector3 direction = gameObject.transform.position - target.transform.position;
+           /* gameObject.transform.rotation = Quaternion.AngleAxis(
                 Mathf.Atan2(direction.y, direction.x) * 180 / Mathf.PI,
-                new Vector3(0, 0, 1));
+                new Vector3(0, 0, 1)); */
         }
         /*GameObject target = null;
         // 1

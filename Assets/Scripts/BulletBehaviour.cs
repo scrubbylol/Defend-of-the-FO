@@ -31,15 +31,13 @@ public class BulletBehaviour : MonoBehaviour {
             {
 				Transform healthBarTransform = target.transform.Find("HealthBar");
 				HealthBar healthBar = healthBarTransform.gameObject.GetComponent<HealthBar>();
-				healthBar.currentHealth = healthBar.currentHealth - 30;
-				if (healthBar.currentHealth < 0) {
-					healthBar.currentHealth = 0;
-				}
-				healthBar.Hit ();
+				healthBar.Damage (30);
 				gm.AddScore (7);
 			
-				if (healthBar.currentHealth <= 0)
+				if (healthBar.GetHealth() <= 0)
                 {
+					healthBar.SetHealth (0);
+					target.GetComponent<BoxCollider2D> ().isTrigger = false;
 					target.GetComponent<enemy_movement>().stopMove = 1;
 					target.GetComponent<Rigidbody2D> ().velocity = Vector3.zero;
 					target.GetComponent<Animator>().SetInteger("state",2);
