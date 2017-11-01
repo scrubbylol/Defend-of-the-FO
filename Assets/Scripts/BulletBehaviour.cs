@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BulletBehaviour : MonoBehaviour {
     public float speed = 10;
@@ -16,7 +17,10 @@ public class BulletBehaviour : MonoBehaviour {
     void Start () {
 		startTime = Time.time;
         distance = Vector3.Distance(startPosition, targetPosition);
-		gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
+
+		if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
+			gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
+		}
     }
 
     private void Update()
@@ -29,24 +33,25 @@ public class BulletBehaviour : MonoBehaviour {
         {
             if (target != null)
             {
-				Transform healthBarTransform = target.transform.Find("HealthBar");
-				HealthBar healthBar = healthBarTransform.gameObject.GetComponent<HealthBar>();
-				healthBar.Damage (30);
-				gm.AddScore (7);
-			
-				if (healthBar.GetHealth() <= 0)
-                {
-					healthBar.SetHealth (0);
-					target.GetComponent<BoxCollider2D> ().isTrigger = false;
-					target.GetComponent<enemy_movement>().stopMove = 1;
-					target.GetComponent<Rigidbody2D> ().velocity = Vector3.zero;
-					target.GetComponent<Animator>().SetInteger("state",2);
-					Destroy (target,target.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
-					gm.AddCash (5);
-					if (!gm.CheckEnemiesAlive (1)) {
-						gm.StartCountDown ();
+				if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
+					Transform healthBarTransform = target.transform.Find ("HealthBar");
+					HealthBar healthBar = healthBarTransform.gameObject.GetComponent<HealthBar> ();
+					healthBar.Damage (30);
+					gm.AddScore (7);
+				
+					if (healthBar.GetHealth () <= 0) {
+						healthBar.SetHealth (0);
+						target.GetComponent<BoxCollider2D> ().isTrigger = false;
+						target.GetComponent<enemy_movement> ().stopMove = 1;
+						target.GetComponent<Rigidbody2D> ().velocity = Vector3.zero;
+						target.GetComponent<Animator> ().SetInteger ("state", 2);
+						Destroy (target, target.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).length);
+						gm.AddCash (5);
+						if (!gm.CheckEnemiesAlive (1)) {
+							gm.StartCountDown ();
+						}
 					}
-                }
+				}
             }
             Destroy(gameObject);
         }

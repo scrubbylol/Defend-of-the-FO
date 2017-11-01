@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class ShootEnemies : MonoBehaviour {
     public List<GameObject> enemiesInRange;
@@ -35,13 +36,18 @@ public class ShootEnemies : MonoBehaviour {
         {
 			if (Time.time - lastShotTime > attackSpeed)
             {
-				Transform healthBarTransform = target.transform.Find("HealthBar");
-				HealthBar healthBar = healthBarTransform.gameObject.GetComponent<HealthBar>();
-				if (healthBar.GetHealth () > 0) {
+				if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
+					Transform healthBarTransform = target.transform.Find ("HealthBar");
+					HealthBar healthBar = healthBarTransform.gameObject.GetComponent<HealthBar> ();
+					if (healthBar.GetHealth () > 0) {
+						Shoot (target.GetComponent<Collider2D> ());
+						lastShotTime = Time.time;
+					} else {
+						target = null;
+					}
+				} else {
 					Shoot (target.GetComponent<Collider2D> ());
 					lastShotTime = Time.time;
-				} else {
-					target = null;
 				}
             }
             // 3

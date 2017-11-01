@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class enemy_animation: MonoBehaviour {
 
@@ -12,7 +13,9 @@ public class enemy_animation: MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
-		gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
+		if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
+			gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
+		}
 	}
 
 	// Update is called once per frame
@@ -38,8 +41,10 @@ public class enemy_animation: MonoBehaviour {
 		    anim.SetInteger ("state", 2);
 			Destroy (this.gameObject,anim.GetCurrentAnimatorStateInfo(0).length);
 
-			if (!gm.CheckEnemiesAlive (2)) {
-				gm.StartCountDown ();
+			if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
+				if (!gm.CheckEnemiesAlive (2)) {
+					gm.StartCountDown ();
+				}
 			}
 		}
 	}

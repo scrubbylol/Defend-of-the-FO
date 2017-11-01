@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class enemy_movement : MonoBehaviour {
 
@@ -16,7 +17,9 @@ public class enemy_movement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		gm = GameObject.Find ("GameManager").GetComponent<game_manager>();
+		if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
+			gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
+		}
 
 		anim = GetComponent<Animator> ();
 	}
@@ -38,13 +41,15 @@ public class enemy_movement : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col) {
-		if (col.gameObject.tag.Equals ("End")) {
-			if (gm.lives > 0) {
-				gm.lives -= 1;
-				gm.livesText.text = "Lives: " + System.Convert.ToString (gm.lives);
+		if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
+			if (col.gameObject.tag.Equals ("End")) {
+				if (gm.lives > 0) {
+					gm.lives -= 1;
+					gm.livesText.text = "Lives: " + System.Convert.ToString (gm.lives);
 
-				if (gm.lives == 0) {
-					gameOver ();
+					if (gm.lives == 0) {
+						gameOver ();
+					}
 				}
 			}
 		}
