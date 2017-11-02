@@ -22,7 +22,7 @@ public class game_manager : MonoBehaviour {
 	void Start () {
 		lives = 10;
 		score = 0;
-		waves = 1;
+		//waves = 1;
 		cash = 50;
 	}
 	
@@ -54,7 +54,7 @@ public class game_manager : MonoBehaviour {
 				return true;
 			}
 		} else {
-			if (GameObject.FindGameObjectsWithTag ("Enemy").Length == 0 && spawner.allEnemiesSpawned) {
+			if (GameObject.FindGameObjectsWithTag ("Enemy").Length - 1 == 0 && spawner.allEnemiesSpawned) {
 				return false;
 			} else {
 				return true;

@@ -6,6 +6,8 @@ public class enemy_spawning : MonoBehaviour {
 
 	public GameObject enemy1;
 	public GameObject enemy2;
+	public GameObject enemy3;
+	public GameObject enemy4;
 	Vector2 whereToSpawn;
 	public float spawnRate = 2f;
 	float nextSpwan = 0.0f;
@@ -19,7 +21,6 @@ public class enemy_spawning : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		allEnemiesSpawned = false;
-		enemiesToSpawn = 10;
 		gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
 	}
 	
@@ -28,11 +29,21 @@ public class enemy_spawning : MonoBehaviour {
 		if (Time.time > nextSpwan && enemiesToSpawn > 0 && !allEnemiesSpawned) {
 			nextSpwan = Time.time + spawnRate;
 			whereToSpawn = gameObject.transform.position;
-			if (gm.waves % 2 == 0) {
+			if (gm.waves == 1) {
+				Instantiate (enemy1, whereToSpawn, Quaternion.identity);
+			} else if (gm.waves == 2) {
+				Instantiate (enemy2, whereToSpawn, Quaternion.identity);
+			} else if (gm.waves == 3)
+				Instantiate (enemy3, whereToSpawn, Quaternion.identity);
+			else {
+				Instantiate (enemy4, whereToSpawn, Quaternion.identity);
+			}
+
+			/*if (gm.waves % 2 == 0) {
 				Instantiate (enemy2, whereToSpawn, Quaternion.identity);
 			} else {
 				Instantiate (enemy1, whereToSpawn, Quaternion.identity);
-			}
+			}*/
 			enemiesToSpawn -= 1;
 
 			if (enemiesToSpawn == 0) {
@@ -41,3 +52,4 @@ public class enemy_spawning : MonoBehaviour {
 		}
 	}
 }
+

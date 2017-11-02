@@ -10,7 +10,6 @@ public class HealthBar : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
-
 		originalScale = gameObject.transform.localScale.x;
 		maxHealth = maxHealth + (gm.waves * 50);
 		currentHealth = maxHealth;
