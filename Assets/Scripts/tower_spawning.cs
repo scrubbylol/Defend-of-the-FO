@@ -44,11 +44,29 @@ public class tower_spawning : MonoBehaviour {
 
             // TODO: Deduct gold
         }
+        else if (canUpgradeTower())
+        {
+            tower.GetComponent<TowerData>().increaseLevel();
+            // TODO: Deduct gold
+        }
     }
 
     private bool canPlaceTower()
     {
 		return tower == null && gm.cash >= 30;
     }
-    
+    private bool canUpgradeTower()
+    {
+        if (tower != null)
+        {
+            TowerData towerData = tower.GetComponent<TowerData>();
+            TowerLevel nextLevel = towerData.getNextLevel();
+            if (nextLevel != null)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
