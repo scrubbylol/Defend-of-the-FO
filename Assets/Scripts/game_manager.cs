@@ -24,6 +24,8 @@ public class game_manager : MonoBehaviour {
 		score = 0;
 		//waves = 1;
 		cash = 50;
+
+		StartCountDown ();
 	}
 	
 	// Update is called once per frame

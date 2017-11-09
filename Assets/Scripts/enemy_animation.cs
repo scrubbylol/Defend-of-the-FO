@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class enemy_animation: MonoBehaviour {
 
 	public Vector2[] movePositions = new Vector2[5];
+	public Vector2 movePositions2;
 	Animator anim;
 
 	private game_manager gm;
@@ -20,30 +21,44 @@ public class enemy_animation: MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (transform.position.x == movePositions[0].x &&
-			transform.position.y == movePositions[0].y) {
-			anim.SetInteger ("state", 1);
-		}
-		if (transform.position.x == movePositions[1].x &&
-			transform.position.y == movePositions[1].y) {
-			anim.SetInteger ("state", 0);
-		}
-		if (transform.position.x == movePositions[2].x &&
-			transform.position.y == movePositions[2].y) {
-			anim.SetInteger ("state", 1);
-		}
-		if (transform.position.x == movePositions[3].x &&
-			transform.position.y == movePositions[3].y) {
-			anim.SetInteger ("state", 0);
-		}
-		if (transform.position.x == movePositions[4].x &&
-			transform.position.y == movePositions[4].y && anim.GetInteger("state") == 0) {
-		    anim.SetInteger ("state", 2);
-			Destroy (this.gameObject,anim.GetCurrentAnimatorStateInfo(0).length);
+		if (SceneManager.GetActiveScene ().name.Equals ("map1_master") || SceneManager.GetActiveScene().name.Equals("menu")) {
+			if (transform.position.x == movePositions [0].x &&
+			    transform.position.y == movePositions [0].y) {
+				anim.SetInteger ("state", 1);
+			}
+			if (transform.position.x == movePositions [1].x &&
+			    transform.position.y == movePositions [1].y) {
+				anim.SetInteger ("state", 0);
+			}
+			if (transform.position.x == movePositions [2].x &&
+			    transform.position.y == movePositions [2].y) {
+				anim.SetInteger ("state", 1);
+			}
+			if (transform.position.x == movePositions [3].x &&
+			    transform.position.y == movePositions [3].y) {
+				anim.SetInteger ("state", 0);
+			}
+			if (transform.position.x == movePositions [4].x &&
+			    transform.position.y == movePositions [4].y && anim.GetInteger ("state") == 0) {
+				anim.SetInteger ("state", 2);
+				Destroy (this.gameObject, anim.GetCurrentAnimatorStateInfo (0).length);
 
-			if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
-				if (!gm.CheckEnemiesAlive (2)) {
-					gm.StartCountDown ();
+				if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
+					if (!gm.CheckEnemiesAlive (2)) {
+						gm.StartCountDown ();
+					}
+				}
+			}
+		} else if (SceneManager.GetActiveScene ().name.Equals ("map2_master")) {
+			if (transform.position.x == movePositions2.x &&
+				transform.position.y == movePositions2.y && anim.GetInteger("state") == 0) {
+				anim.SetInteger ("state", 2);
+				Destroy (this.gameObject, anim.GetCurrentAnimatorStateInfo (0).length);
+
+				if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
+					if (!gm.CheckEnemiesAlive (2)) {
+						gm.StartCountDown ();
+					}
 				}
 			}
 		}

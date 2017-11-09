@@ -48,7 +48,7 @@ public class tower_spawning : MonoBehaviour {
 
     private bool canPlaceTower()
     {
-		return tower == null && gm.cash > 30;
+		return tower == null && gm.cash >= 30;
     }
     
 }

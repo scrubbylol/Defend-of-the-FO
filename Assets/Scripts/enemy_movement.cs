@@ -8,6 +8,7 @@ public class enemy_movement : MonoBehaviour {
 	public float speed = 5f;
 
 	public Vector2[] movePositions = new Vector2[12];
+	public Vector2[] movePositions2 = new Vector2[5];
 
     private int currentWaypoint = 0;
     private game_manager gm;
@@ -27,14 +28,28 @@ public class enemy_movement : MonoBehaviour {
 	// Update is called once per frame
 
 	void FixedUpdate () {
-		Vector2 nextPosition = movePositions [0];
-		if (stopMove == 0) {
-			transform.position = Vector2.MoveTowards (transform.position, nextPosition, speed * Time.deltaTime);
-			if (transform.position.x == nextPosition.x && transform.position.y == nextPosition.y) {
-				for (int i = 0; i < movePositions.Length - 1; i++) {
-					movePositions [i] = movePositions [i + 1];
-					currentWaypoint++;
+		if (SceneManager.GetActiveScene ().name.Equals ("map1_master") || SceneManager.GetActiveScene().name.Equals("menu")) {
+			Vector2 nextPosition = movePositions [0];
+			if (stopMove == 0) {
+				transform.position = Vector2.MoveTowards (transform.position, nextPosition, speed * Time.deltaTime);
+				if (transform.position.x == nextPosition.x && transform.position.y == nextPosition.y) {
+					for (int i = 0; i < movePositions.Length - 1; i++) {
+						movePositions [i] = movePositions [i + 1];
+						currentWaypoint++;
 
+					}
+				}
+			}
+		} else if (SceneManager.GetActiveScene ().name.Equals ("map2_master")) {
+			Vector2 nextPosition = movePositions2 [0];
+			if (stopMove == 0) {
+				transform.position = Vector2.MoveTowards (transform.position, nextPosition, speed * Time.deltaTime);
+				if (transform.position.x == nextPosition.x && transform.position.y == nextPosition.y) {
+					for (int i = 0; i < movePositions2.Length - 1; i++) {
+						movePositions2 [i] = movePositions2 [i + 1];
+						currentWaypoint++;
+
+					}
 				}
 			}
 		}
@@ -44,6 +59,7 @@ public class enemy_movement : MonoBehaviour {
 		if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
 			if (col.gameObject.tag.Equals ("End")) {
 				if (gm.lives > 0) {
+					GetComponent<BoxCollider2D> ().isTrigger = false;
 					gm.lives -= 1;
 					gm.livesText.text = "Lives: " + System.Convert.ToString (gm.lives);
 
