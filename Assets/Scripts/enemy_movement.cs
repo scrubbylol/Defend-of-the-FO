@@ -11,8 +11,10 @@ public class enemy_movement : MonoBehaviour {
 	public Vector2[] movePositions2 = new Vector2[5];
 
     private int currentWaypoint = 0;
+	public int nextMove = 0;
     private game_manager gm;
 	public int stopMove = 0;
+	public int moveState = 0;
 
 	Animator anim;
 
@@ -24,19 +26,28 @@ public class enemy_movement : MonoBehaviour {
 
 		anim = GetComponent<Animator> ();
 	}
-	
+
 	// Update is called once per frame
 
 	void FixedUpdate () {
 		if (SceneManager.GetActiveScene ().name.Equals ("map1_master") || SceneManager.GetActiveScene().name.Equals("menu")) {
-			Vector2 nextPosition = movePositions [0];
+			Vector2 nextPosition;
+			string name = gameObject.name;
+			if (name == "enemy6(Clone)") {
+				Debug.Log (nextMove);
+				nextPosition = movePositions [nextMove];
+			} else {
+				nextPosition = movePositions [0];
+			}
 			if (stopMove == 0) {
 				transform.position = Vector2.MoveTowards (transform.position, nextPosition, speed * Time.deltaTime);
-				if (transform.position.x == nextPosition.x && transform.position.y == nextPosition.y) {
+				if (transform.position.x == nextPosition.x && transform.position.y == nextPosition.y){
+					if (name != "enemy6(Clone)") {
+						nextMove++;
+					}
 					for (int i = 0; i < movePositions.Length - 1; i++) {
 						movePositions [i] = movePositions [i + 1];
 						currentWaypoint++;
-
 					}
 				}
 			}

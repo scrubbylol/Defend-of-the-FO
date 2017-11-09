@@ -24,7 +24,7 @@ public class ShootEnemies : MonoBehaviour {
         float minimalEnemyDistance = float.MaxValue;
         foreach (GameObject enemy in enemiesInRange)
         {
-            float distanceToGoal = enemy.GetComponent<enemy_movement>().distanceToGoal();
+			float distanceToGoal = 10;
 			if (distanceToGoal < minimalEnemyDistance)
             {
                 target = enemy;

@@ -16,9 +16,11 @@ public class enemy_animation_noInvert: MonoBehaviour {
 		anim = GetComponent<Animator> ();
 		if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
 			gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
-			Vector3 theScale = transform.localScale;
-			theScale.x = theScale.x * -1;
-			transform.localScale = theScale;
+			if (gm.waves == 4 || gm.waves == 5) {
+				Vector3 theScale = transform.localScale;
+				theScale.x = theScale.x * -1;
+				transform.localScale = theScale;
+			}
 		}
 	}
 
