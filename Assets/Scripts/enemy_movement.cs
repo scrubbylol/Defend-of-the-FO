@@ -75,15 +75,11 @@ public class enemy_movement : MonoBehaviour {
 					gm.livesText.text = "Lives: " + System.Convert.ToString (gm.lives);
 
 					if (gm.lives == 0) {
-						gameOver ();
+						gm.GameOver ();
 					}
 				}
 			}
 		}
-	}
-
-	void gameOver() {
-		GameObject.Find ("GameOver_Text").GetComponent<Animation> ().Play ();
 	}
 
     public float distanceToGoal()

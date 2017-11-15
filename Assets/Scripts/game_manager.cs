@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class game_manager : MonoBehaviour {
 
@@ -13,6 +14,8 @@ public class game_manager : MonoBehaviour {
 	public Text livesText;
 	public Text scoreText;
 	public Text wavesText;
+	public Text goScoreText;
+	public Text goWavesText;
 	public Text cashText;
 	public Text countdownText;
 
@@ -20,7 +23,7 @@ public class game_manager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		lives = 10;
+		//lives = 10;
 		score = 0;
 		//waves = 1;
 		cash = 50;
@@ -46,6 +49,7 @@ public class game_manager : MonoBehaviour {
 	public void AddScore(int amt) {
 		score += amt;
 		scoreText.text = "Score: " + System.Convert.ToString (score);
+		goScoreText.text = scoreText.text;
 	}
 
 	public bool CheckEnemiesAlive(int type) {
@@ -77,9 +81,36 @@ public class game_manager : MonoBehaviour {
 		countdownText.enabled = false;
 		waves += 1;
 		wavesText.text = "- Wave " + System.Convert.ToString (waves) + " -";
+		goWavesText.text = "Waves: " + System.Convert.ToString (waves);
 		wavesText.gameObject.GetComponent<Animation> ().Play ();
 		yield return new WaitForSeconds (time);
 		spawner.allEnemiesSpawned = false;
 		spawner.enemiesToSpawn = 10;
+	}
+
+	public void GameOver() {
+		GameObject.Find ("GameOver_Text").GetComponent<Animation> ().Play ();
+		GameObject.Find ("Score_Back").GetComponent<RawImage> ().enabled = false;
+		GameObject.Find ("Lives_Cash_Back").GetComponent<RawImage> ().enabled = false;
+		GameObject.Find ("Heart").SetActive (false);
+		GameObject.Find ("Money").SetActive (false);
+
+		scoreText.enabled = false;
+		livesText.enabled = false;
+		cashText.enabled = false;
+		spawner.allEnemiesSpawned = true;
+
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+		foreach (GameObject enem in enemies) {
+			enem.GetComponent<enemy_movement> ().enabled = false;
+		}
+	}
+
+	public void Retry() {
+		SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+	}
+
+	public void BackToMain() {
+		SceneManager.LoadScene ("menu");
 	}
 }
