@@ -47,6 +47,11 @@ public class BulletBehaviour : MonoBehaviour {
 						target.GetComponent<Animator> ().SetInteger ("state", 2);
 						Destroy (target, target.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).length);
 						gm.AddCash (5);
+
+						if (target.name.Equals ("enemy6(Clone)")) {
+							gm.slimeBabiesAlive -= 1;
+						}
+
 						if (!gm.CheckEnemiesAlive (1)) {
 							gm.StartCountDown ();
 						}

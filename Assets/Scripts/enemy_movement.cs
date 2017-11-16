@@ -34,7 +34,6 @@ public class enemy_movement : MonoBehaviour {
 			Vector2 nextPosition;
 			string name = gameObject.name;
 			if (name == "enemy6(Clone)") {
-				Debug.Log (nextMove);
 				nextPosition = movePositions [nextMove];
 			} else {
 				nextPosition = movePositions [0];
@@ -53,9 +52,18 @@ public class enemy_movement : MonoBehaviour {
 			}
 		} else if (SceneManager.GetActiveScene ().name.Equals ("map2_master")) {
 			Vector2 nextPosition = movePositions2 [0];
+			string name = gameObject.name;
+			if (name == "enemy6(Clone)") {
+				nextPosition = movePositions2 [nextMove];
+			} else {
+				nextPosition = movePositions2 [0];
+			}
 			if (stopMove == 0) {
 				transform.position = Vector2.MoveTowards (transform.position, nextPosition, speed * Time.deltaTime);
 				if (transform.position.x == nextPosition.x && transform.position.y == nextPosition.y) {
+					if (name != "enemy6(Clone)") {
+						nextMove++;
+					}
 					for (int i = 0; i < movePositions2.Length - 1; i++) {
 						movePositions2 [i] = movePositions2 [i + 1];
 						currentWaypoint++;

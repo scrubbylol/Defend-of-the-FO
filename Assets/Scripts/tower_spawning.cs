@@ -14,22 +14,7 @@ public class tower_spawning : MonoBehaviour {
     void Start () {
 		gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
 	}
-	
-	// Update is called once per frame
 	void Update () {
-/*if (Input.GetMouseButtonDown(0))
-        {
-            //2
-            if (canPlaceTower())
-            {
-                //3
-                tower = (GameObject)
-                  Instantiate(towerPrefab, transform.position, Quaternion.identity);
-
-				gm.SubCash (30);
-                // TODO: Deduct gold
-            }
-        }*/
     }
     void OnMouseUp()
     {
@@ -37,6 +22,7 @@ public class tower_spawning : MonoBehaviour {
         if (canPlaceTower())
         {
             //3
+			gameObject.GetComponent<SpriteRenderer>().enabled = false;
             tower = (GameObject)
               Instantiate(towerPrefab, transform.position, Quaternion.identity);
             //4

@@ -21,12 +21,15 @@ public class game_manager : MonoBehaviour {
 
 	public enemy_spawning spawner;
 
+	public int slimeBabiesAlive;
+
 	// Use this for initialization
 	void Start () {
 		//lives = 10;
 		score = 0;
-		//waves = 1;
-		cash = 50;
+		//waves = 2;
+		//cash = 300;
+		slimeBabiesAlive = 0;
 
 		StartCountDown ();
 	}
@@ -54,10 +57,18 @@ public class game_manager : MonoBehaviour {
 
 	public bool CheckEnemiesAlive(int type) {
 		if (type == 1) {
-			if (GameObject.FindGameObjectsWithTag ("Enemy").Length - 1 == 0 && spawner.allEnemiesSpawned) {
-				return false;
+			if (waves != 5) {
+				if (GameObject.FindGameObjectsWithTag ("Enemy").Length - 1 == 0 && spawner.allEnemiesSpawned) {
+					return false;
+				} else {
+					return true;
+				}
 			} else {
-				return true;
+				if (spawner.allEnemiesSpawned && slimeBabiesAlive == 0) {
+					return false;
+				} else {
+					return true;
+				}
 			}
 		} else {
 			if (GameObject.FindGameObjectsWithTag ("Enemy").Length - 1 == 0 && spawner.allEnemiesSpawned) {
@@ -69,6 +80,12 @@ public class game_manager : MonoBehaviour {
 	}
 
 	public void StartCountDown() {
+		Debug.Log ("call");
+		GameObject[] bullets = GameObject.FindGameObjectsWithTag ("Bullet");
+		foreach (GameObject blt in bullets) {
+			Destroy (blt);
+		}
+
 		countdownText.enabled = true;
 		StartCoroutine (WaitForWave (1));
 	}

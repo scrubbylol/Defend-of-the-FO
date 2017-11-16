@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HealthBar : MonoBehaviour {
 	private float maxHealth = 50;
-	private float currentHealth = 50;
+	public float currentHealth = 50;
 	private float originalScale;
 	private game_manager gm;
 	// Use this for initialization
@@ -19,11 +19,15 @@ public class HealthBar : MonoBehaviour {
 			maxHealth = 250;
 		} else if (gm.waves == 4) {
 			maxHealth = 300;
-		} else if (gm.waves == 5){
-			maxHealth = 500;
+		} else if (gm.waves == 5) {
+			maxHealth = 400;
 			if (gameObject.name.Equals ("enemy6(Clone)")) {
-				maxHealth = 250;
+				maxHealth = 100;
 			}
+		} else if (gm.waves == 6) {
+			maxHealth = 350;
+		} else {
+			maxHealth = 400;
 		}
 		currentHealth = maxHealth;
 	}
