@@ -80,6 +80,9 @@ public class enemy_movement : MonoBehaviour {
 				if (gm.lives > 0) {
 					GetComponent<BoxCollider2D> ().enabled = false;
 					GetComponent<CircleCollider2D> ().enabled = false;
+					if (gm.waves == 5) {
+						gm.slimeBabiesAlive -= 1;
+					}
 					gm.lives -= 1;
 					gm.livesText.text = "Lives: " + System.Convert.ToString (gm.lives);
 
