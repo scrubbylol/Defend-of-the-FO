@@ -70,7 +70,8 @@ public class enemy_movement : MonoBehaviour {
 		if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
 			if (col.gameObject.tag.Equals ("End")) {
 				if (gm.lives > 0) {
-					GetComponent<BoxCollider2D> ().isTrigger = false;
+					GetComponent<BoxCollider2D> ().enabled = false;
+					GetComponent<CircleCollider2D> ().enabled = false;
 					gm.lives -= 1;
 					gm.livesText.text = "Lives: " + System.Convert.ToString (gm.lives);
 
