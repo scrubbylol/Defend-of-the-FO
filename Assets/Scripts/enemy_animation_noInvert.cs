@@ -18,7 +18,18 @@ public class enemy_animation_noInvert: MonoBehaviour {
 		anim = GetComponent<Animator> ();
 		if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
 			gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
-			if (gm.waves == 4 || gm.waves == 5 ||gm.waves == 6) {
+			Vector3 theScale = transform.localScale;
+			string name = gameObject.name;
+			if (name == "enemy6(Clone)" && ((whereToMove == 2 ) || (whereToMove == 4))) {
+				theScale.x = theScale.x * -1;
+			}
+			theScale.x = theScale.x * -1;
+			transform.localScale = theScale;
+			if (gm.waves == 1 || gm.waves == 2) {
+				theScale.x = theScale.x * -1;
+				transform.localScale = theScale;
+			}
+			/*if (gm.waves == 3 ||gm.waves == 4 || gm.waves == 5 || gm.waves == 6 || gm.waves == 7 || gm.waves == 8 || gm.waves == 9 || gm.waves == 10 ) {
 				Vector3 theScale = transform.localScale;
 				string name = gameObject.name;
 				if (name == "enemy6(Clone)" && ((whereToMove == 2 ) || (whereToMove == 4))) {
@@ -26,7 +37,7 @@ public class enemy_animation_noInvert: MonoBehaviour {
 				}
 				theScale.x = theScale.x * -1;
 				transform.localScale = theScale;
-			}
+			}*/
 		}
 	}
 
@@ -38,12 +49,6 @@ public class enemy_animation_noInvert: MonoBehaviour {
 				Vector3 theScale = transform.localScale;
 				theScale.x = theScale.x * -1;
 				transform.localScale = theScale;
-				/*theScale = transform.Find ("HealthBar").localScale;
-				theScale.x = theScale.x * -1;
-				transform.Find ("HealthBar").localScale = theScale;
-				theScale = transform.Find ("HealthBarBackground").localScale;
-				theScale.x = theScale.x * -1; 
-				transform.Find ("HealthBarBackground").localScale = theScale;*/
 				nextAnime = 1;
 
 			}

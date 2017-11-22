@@ -27,7 +27,7 @@ public class game_manager : MonoBehaviour {
 	void Start () {
 		//lives = 10;
 		score = 0;
-		//waves = 2;
+		//waves = 11;
 		//cash = 300;
 		slimeBabiesAlive = 0;
 
