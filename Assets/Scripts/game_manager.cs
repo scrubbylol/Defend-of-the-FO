@@ -27,7 +27,7 @@ public class game_manager : MonoBehaviour {
 	void Start () {
 		//lives = 10;
 		score = 0;
-		//waves = 11;
+		waves = 4;
 		//cash = 300;
 		slimeBabiesAlive = 0;
 
@@ -56,22 +56,14 @@ public class game_manager : MonoBehaviour {
 	}
 
 	public bool CheckEnemiesAlive(int type) {
-		if (type == 1) {
-			if (waves != 5) {
-				if (GameObject.FindGameObjectsWithTag ("Enemy").Length - 1 == 0 && spawner.allEnemiesSpawned) {
-					return false;
-				} else {
-					return true;
-				}
+		if (waves != 5) {
+			if (GameObject.FindGameObjectsWithTag ("Enemy").Length - 1 == 0 && spawner.allEnemiesSpawned) {
+				return false;
 			} else {
-				if (spawner.allEnemiesSpawned && slimeBabiesAlive == 0) {
-					return false;
-				} else {
-					return true;
-				}
+				return true;
 			}
 		} else {
-			if (GameObject.FindGameObjectsWithTag ("Enemy").Length - 1 == 0 && spawner.allEnemiesSpawned) {
+			if (spawner.allEnemiesSpawned && slimeBabiesAlive == 0) {
 				return false;
 			} else {
 				return true;

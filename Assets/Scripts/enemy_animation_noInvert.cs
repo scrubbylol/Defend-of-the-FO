@@ -29,15 +29,7 @@ public class enemy_animation_noInvert: MonoBehaviour {
 				theScale.x = theScale.x * -1;
 				transform.localScale = theScale;
 			}
-			/*if (gm.waves == 3 ||gm.waves == 4 || gm.waves == 5 || gm.waves == 6 || gm.waves == 7 || gm.waves == 8 || gm.waves == 9 || gm.waves == 10 ) {
-				Vector3 theScale = transform.localScale;
-				string name = gameObject.name;
-				if (name == "enemy6(Clone)" && ((whereToMove == 2 ) || (whereToMove == 4))) {
-					theScale.x = theScale.x * -1;
-				}
-				theScale.x = theScale.x * -1;
-				transform.localScale = theScale;
-			}*/
+			GetComponent<enemy_movement> ().deathTimer = anim.GetCurrentAnimatorStateInfo (0).length;
 		}
 	}
 
@@ -77,12 +69,11 @@ public class enemy_animation_noInvert: MonoBehaviour {
 			    transform.position.y == movePositions [4].y) {
 				anim.SetInteger ("state", 2);
 				Destroy (this.gameObject, anim.GetCurrentAnimatorStateInfo (0).length);
-
-				if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
+				/*if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
 					if (!gm.CheckEnemiesAlive (2)) {
 						gm.StartCountDown();
 					}
-				}
+				} */
 			}
 			whereToMove = 0;
 		} else if (SceneManager.GetActiveScene ().name.Equals ("map2_master")) {

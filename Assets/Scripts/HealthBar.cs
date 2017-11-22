@@ -20,7 +20,7 @@ public class HealthBar : MonoBehaviour {
 		} else if (gm.waves == 4) {
 			maxHealth = 300;
 		} else if (gm.waves == 5) {
-			maxHealth = 400;
+			maxHealth = 200;
 			if (gameObject.name.Equals ("enemy6(Clone)")) {
 				maxHealth = 100;
 			}

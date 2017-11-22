@@ -17,6 +17,9 @@ public class enemy_spawning : MonoBehaviour {
 	public GameObject enemy11;
 	public GameObject enemy12;
 	public GameObject enemy13;
+	public GameObject enemy14;
+	public GameObject enemy15;
+
 	Vector2 whereToSpawn;
 	public float spawnRate = 2f;
 	float nextSpwan = 0.0f;
@@ -62,6 +65,13 @@ public class enemy_spawning : MonoBehaviour {
 				Instantiate (enemy11, whereToSpawn, Quaternion.identity);
 			}else if (gm.waves == 12) {
 				Instantiate (enemy12, whereToSpawn, Quaternion.identity);
+			}else if (gm.waves == 13) {
+				Instantiate (enemy13, whereToSpawn, Quaternion.identity);
+			}else if (gm.waves == 14) {
+				Instantiate (enemy14, whereToSpawn, Quaternion.identity);
+			}else if (gm.waves == 15) {
+				Instantiate (enemy15, whereToSpawn, Quaternion.identity);
+				enemiesToSpawn = 1;
 			}
 
 			/*if (gm.waves % 2 == 0) {

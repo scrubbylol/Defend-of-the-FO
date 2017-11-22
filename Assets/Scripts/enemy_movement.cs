@@ -16,6 +16,8 @@ public class enemy_movement : MonoBehaviour {
 	public int stopMove = 0;
 	public int moveState = 0;
 
+	public float deathTimer;
+
 	Animator anim;
 
 	// Use this for initialization
@@ -86,10 +88,21 @@ public class enemy_movement : MonoBehaviour {
 					gm.lives -= 1;
 					gm.livesText.text = "Lives: " + System.Convert.ToString (gm.lives);
 
+					StartCoroutine (waitForDeath (deathTimer));
+
 					if (gm.lives == 0) {
 						gm.GameOver ();
 					}
 				}
+			}
+		}
+	}
+
+	IEnumerator waitForDeath(float time) {
+		yield return new WaitForSeconds (time);
+		if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
+			if (!gm.CheckEnemiesAlive (2)) {
+				gm.StartCountDown();
 			}
 		}
 	}
