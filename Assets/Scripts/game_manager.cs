@@ -21,15 +21,17 @@ public class game_manager : MonoBehaviour {
 
 	public enemy_spawning spawner;
 
+	public bool newHighScore;
 	public int slimeBabiesAlive;
 
 	// Use this for initialization
 	void Start () {
 		//lives = 10;
 		score = 0;
-		waves = 4;
+		//waves = 4;
 		//cash = 300;
 		slimeBabiesAlive = 0;
+		newHighScore = false;
 
 		StartCountDown ();
 	}
@@ -113,13 +115,28 @@ public class game_manager : MonoBehaviour {
 		foreach (GameObject enem in enemies) {
 			enem.GetComponent<enemy_movement> ().enabled = false;
 		}
+
+		GameObject[] towers = GameObject.FindGameObjectsWithTag ("Tower");
+		foreach (GameObject twr in towers) {
+			Destroy (twr);
+		}
+			
+		StartCoroutine (GetComponent<game_over> ().getHsFromDb ());
 	}
 
 	public void Retry() {
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+
+		if (newHighScore) {
+			StartCoroutine (GetComponent <game_over> ().addHsToDb ());
+		}
 	}
 
 	public void BackToMain() {
 		SceneManager.LoadScene ("menu");
+
+		if (newHighScore) {
+			StartCoroutine (GetComponent <game_over> ().addHsToDb ());
+		}
 	}
 }

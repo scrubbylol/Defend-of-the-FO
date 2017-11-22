@@ -69,11 +69,6 @@ public class enemy_animation_noInvert: MonoBehaviour {
 			    transform.position.y == movePositions [4].y) {
 				anim.SetInteger ("state", 2);
 				Destroy (this.gameObject, anim.GetCurrentAnimatorStateInfo (0).length);
-				/*if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
-					if (!gm.CheckEnemiesAlive (2)) {
-						gm.StartCountDown();
-					}
-				} */
 			}
 			whereToMove = 0;
 		} else if (SceneManager.GetActiveScene ().name.Equals ("map2_master")) {
@@ -81,12 +76,6 @@ public class enemy_animation_noInvert: MonoBehaviour {
 				transform.position.y == movePositions2.y && anim.GetInteger("state") == 0) {
 				anim.SetInteger ("state", 2);
 				Destroy (this.gameObject, anim.GetCurrentAnimatorStateInfo (0).length);
-
-				if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
-					if (!gm.CheckEnemiesAlive (2)) {
-						gm.StartCountDown ();
-					}
-				}
 			}
 		}
 	}
