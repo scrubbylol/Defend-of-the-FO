@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 0949dc090c9b64f45b415c67ffc39d2c
-timeCreated: 1510201924
+timeCreated: 1511421314
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -109,6 +109,7 @@ TextureImporter:
     21300204: slime_102
     21300206: slime_103
     21300208: slime_104
+  externalObjects: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -162,6 +163,7 @@ TextureImporter:
   platformSettings:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -170,6 +172,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Standalone
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -178,6 +181,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Android
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -471,13 +475,13 @@ TextureImporter:
       name: slime_21
       rect:
         serializedVersion: 2
-        x: 0
+        x: 4
         y: 724
-        width: 67
+        width: 63
         height: 68
       alignment: 9
       pivot: {x: 0.5000001, y: 0.5178251}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 4, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0

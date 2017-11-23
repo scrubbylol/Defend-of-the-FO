@@ -39,28 +39,33 @@ public class BulletBehaviour : MonoBehaviour {
 					healthBar.Damage (30);
 					gm.AddScore (7);
 				
-					if (healthBar.GetHealth () <= 0) {
+					if (healthBar.GetHealth () <= 0 && !target.GetComponent<enemy_movement>().isDying) {
 						healthBar.SetHealth (0);
 						target.GetComponent<BoxCollider2D> ().isTrigger = false;
 						target.GetComponent<enemy_movement> ().stopMove = 1;
+						target.GetComponent<enemy_movement> ().isDying = true;
 						target.GetComponent<Rigidbody2D> ().velocity = Vector3.zero;
 						target.GetComponent<Animator> ().SetInteger ("state", 2);
 						Destroy (target, target.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).length);
+
 						gm.AddCash (5);
 
 						if (target.name.Equals ("enemy6(Clone)")) {
 							gm.slimeBabiesAlive -= 1;
 						}
-
-						if (!gm.CheckEnemiesAlive (1)) {
-							gm.StartCountDown ();
+							
+						if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
+							if (!gm.CheckEnemiesAlive (2)) {
+								gm.StartCountDown();
+							}
 						}
 					}
 				}
             }
-            Destroy(gameObject);
+			Destroy(gameObject);
         }
     }
+
     // 1 
     
 	

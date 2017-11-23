@@ -58,8 +58,21 @@ public class game_manager : MonoBehaviour {
 	}
 
 	public bool CheckEnemiesAlive(int type) {
+		int alive = GameObject.FindGameObjectsWithTag ("Enemy").Length;
+		Debug.Log (alive);
+
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+		foreach (GameObject enem in enemies) {
+			if (enem.GetComponent<enemy_movement> ().isDying) {
+				alive -= 1;
+				Debug.Log ("RUN??");
+			}
+		}
+
+		Debug.Log (alive);
+
 		if (waves != 5) {
-			if (GameObject.FindGameObjectsWithTag ("Enemy").Length - 1 == 0 && spawner.allEnemiesSpawned) {
+			if (alive == 0 && spawner.allEnemiesSpawned) {
 				return false;
 			} else {
 				return true;

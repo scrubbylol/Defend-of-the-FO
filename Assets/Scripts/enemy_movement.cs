@@ -18,6 +18,8 @@ public class enemy_movement : MonoBehaviour {
 
 	public float deathTimer;
 
+	public bool isDying;
+
 	Animator anim;
 
 	// Use this for initialization
@@ -80,6 +82,8 @@ public class enemy_movement : MonoBehaviour {
 		if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
 			if (col.gameObject.tag.Equals ("End")) {
 				if (gm.lives > 0) {
+					isDying = true;
+
 					GetComponent<BoxCollider2D> ().enabled = false;
 					GetComponent<CircleCollider2D> ().enabled = false;
 					if (gm.waves == 5) {
@@ -88,7 +92,12 @@ public class enemy_movement : MonoBehaviour {
 					gm.lives -= 1;
 					gm.livesText.text = "Lives: " + System.Convert.ToString (gm.lives);
 
-					StartCoroutine (waitForDeath (deathTimer));
+					//StartCoroutine (waitForDeath (deathTimer));
+					if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
+						if (!gm.CheckEnemiesAlive (1)) {
+							gm.StartCountDown();
+						}
+					}
 
 					if (gm.lives == 0) {
 						gm.GameOver ();
@@ -98,14 +107,17 @@ public class enemy_movement : MonoBehaviour {
 		}
 	}
 
-	IEnumerator waitForDeath(float time) {
+	/*public IEnumerator waitForDeath(float time) {
+		Debug.Log ("1");
+		Debug.Log (time);
 		yield return new WaitForSeconds (time);
+		Debug.Log ("1.5");
 		if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
 			if (!gm.CheckEnemiesAlive (2)) {
 				gm.StartCountDown();
 			}
 		}
-	}
+	}*/
 
     public float distanceToGoal()
     {

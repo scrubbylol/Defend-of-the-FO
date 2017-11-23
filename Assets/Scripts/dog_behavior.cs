@@ -22,7 +22,7 @@ public class dog_behavior : MonoBehaviour {
 				gameObject.GetComponent<enemy_movement> ().speed = 4;
 				anim.SetInteger ("state", 1);
 				Time = Time + 1;
-				if (Time > 50) {
+				if (Time > 75) {
 					anim.SetInteger ("state", 0);
 					gameObject.GetComponent<enemy_movement> ().speed = 2;
 					isDamaged = 1;
