@@ -59,7 +59,7 @@ public class enemy_spawning : MonoBehaviour {
 				Instantiate (enemy8, whereToSpawn, Quaternion.identity);
 			} else if (gm.waves == 9) {
 				Instantiate (enemy9, whereToSpawn, Quaternion.identity);
-			} else if (gm.waves == 10) {
+			}else if (gm.waves == 10) {
 				Instantiate (enemy10, whereToSpawn, Quaternion.identity);
 			}else if (gm.waves == 11) {
 				Instantiate (enemy11, whereToSpawn, Quaternion.identity);
@@ -69,9 +69,8 @@ public class enemy_spawning : MonoBehaviour {
 				Instantiate (enemy13, whereToSpawn, Quaternion.identity);
 			}else if (gm.waves == 14) {
 				Instantiate (enemy14, whereToSpawn, Quaternion.identity);
-			}else if (gm.waves == 15) {
+			}else if (gm.waves == 14) {
 				Instantiate (enemy15, whereToSpawn, Quaternion.identity);
-				enemiesToSpawn = 1;
 			}
 
 			/*if (gm.waves % 2 == 0) {

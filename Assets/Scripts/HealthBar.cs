@@ -20,14 +20,32 @@ public class HealthBar : MonoBehaviour {
 		} else if (gm.waves == 4) {
 			maxHealth = 300;
 		} else if (gm.waves == 5) {
-			maxHealth = 200;
+			maxHealth = 350;
 			if (gameObject.name.Equals ("enemy6(Clone)")) {
 				maxHealth = 100;
 			}
 		} else if (gm.waves == 6) {
 			maxHealth = 350;
-		} else {
+		} else if (gm.waves == 7) {
 			maxHealth = 400;
+		} else if (gm.waves == 8) {
+			maxHealth = 300;
+		} else if (gm.waves == 9) {
+			maxHealth = 450;
+		} else if (gm.waves == 10) {
+			maxHealth = 500;
+		} else if (gm.waves == 11) {
+			maxHealth = 550;
+		} else if (gm.waves == 12) {
+			maxHealth = 600;
+		} else if (gm.waves == 13) {
+			maxHealth = 650;
+		} else if (gm.waves == 14) {
+			maxHealth = 700;
+		} else if (gm.waves == 15) {
+			maxHealth = 1000;
+		} else {
+			maxHealth = 2000;
 		}
 		currentHealth = maxHealth;
 	}

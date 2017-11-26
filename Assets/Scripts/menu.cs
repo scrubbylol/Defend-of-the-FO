@@ -58,11 +58,11 @@ public class menu : MonoBehaviour {
 			address = "http://192.168.0.10/dotf/geths.php";
 		#endif
 
-		WWW hs = new WWW (address);
+		WWW hs = new WWW ("http://192.168.0.10/dotf/geths.php");
 
 		yield return hs;
-
-		if (hs.error != null) {
+		Debug.Log(hs.error);
+		if (hs.error == null) {
 			Debug.Log(hs.error);
 		}
 

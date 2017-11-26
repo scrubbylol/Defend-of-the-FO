@@ -46,7 +46,7 @@ public class game_over : MonoBehaviour {
 			address = "http://192.168.0.10/dotf/geths.php";
 		#endif
 
-		WWW hs = new WWW (address);
+		WWW hs = new WWW ("http://192.168.0.10/dotf/geths.php");
 
 		yield return hs;
 
@@ -149,7 +149,7 @@ public class game_over : MonoBehaviour {
 	{
 		string post_url;
 		#if UNITY_EDITOR
-		post_url = "http://localhost/dotf/addhs.php?" + "&name=" + ((hs_name.text!="") ? hs_name.text : "xxx") + "&score=" + System.Convert.ToString(gm.score);
+		post_url = "http://192.168.0.10/dotf/addhs.php?" + "&name=" + ((hs_name.text!="") ? hs_name.text : "xxx") + "&score=" + System.Convert.ToString(gm.score);
 		#else
 		post_url = "http://192.168.0.10/dotf/addhs.php?" + "&name=" + ((hs_name.text!="") ? hs_name.text : "xxx") + "&score=" + System.Convert.ToString(gm.score);
 		#endif
