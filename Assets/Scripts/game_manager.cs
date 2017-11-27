@@ -25,8 +25,16 @@ public class game_manager : MonoBehaviour {
 	public bool newHighScore;
 	public int slimeBabiesAlive;
 
+	// Audio Stuff
+	private AudioSource audSource;
+	public AudioClip constructionSound;
+	public AudioClip gameOverSound;
+	public AudioClip waveCompleteSound;
+
 	// Use this for initialization
 	void Start () {
+		audSource = GameObject.Find ("Main Camera").GetComponent<AudioSource> ();
+
 		//lives = 10;
 		score = 0;
 		//waves = 4;
@@ -106,6 +114,10 @@ public class game_manager : MonoBehaviour {
 			Destroy (blt);
 		}
 
+		if (waves != 0) {
+			playWaveCompleteSound ();
+		}
+
 		countdownText.enabled = true;
 		StartCoroutine (WaitForWave (1));
 	}
@@ -126,6 +138,8 @@ public class game_manager : MonoBehaviour {
 	}
 
 	public void GameOver() {
+		playGameOverSound ();
+
 		GameObject.Find ("GameOver_Text").GetComponent<Animation> ().Play ();
 		GameObject.Find ("Score_Back").GetComponent<RawImage> ().enabled = false;
 		GameObject.Find ("Lives_Cash_Back").GetComponent<RawImage> ().enabled = false;
@@ -164,5 +178,17 @@ public class game_manager : MonoBehaviour {
 		if (newHighScore) {
 			StartCoroutine (GetComponent <game_over> ().addHsToDb ());
 		}
+	}
+
+	public void playConstructionSound() {
+		audSource.PlayOneShot (constructionSound, 0.85f);
+	}
+
+	public void playGameOverSound() {
+		audSource.PlayOneShot (gameOverSound, 0.85f);
+	}
+
+	public void playWaveCompleteSound() {
+		audSource.PlayOneShot (waveCompleteSound, 0.85f);
 	}
 }

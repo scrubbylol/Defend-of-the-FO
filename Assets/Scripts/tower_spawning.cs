@@ -81,7 +81,7 @@ public class tower_spawning : MonoBehaviour {
     }
     private void placeWizardTower()
     {
-        Debug.Log("Test");
+		gm.playConstructionSound ();
         //3
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         wizard_tower = (GameObject)
@@ -96,10 +96,10 @@ public class tower_spawning : MonoBehaviour {
         wizard_select.GetComponentInChildren<Text>().enabled = false;
         //Destroy(archer_select);
         //Destroy(wizard_select);
-        Debug.Log("Test2");
     }
     private void placeArcherTower()
     {
+		gm.playConstructionSound ();
         //3
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         archer_tower = (GameObject)
@@ -112,7 +112,6 @@ public class tower_spawning : MonoBehaviour {
         wizard_select.GetComponentInChildren<Button>().enabled = false;
         wizard_select.GetComponentInChildren<Image>().enabled = false;
         wizard_select.GetComponentInChildren<Text>().enabled = false;
-        Debug.Log("Test2");
     }
     
     private bool canUpgradeWizardTower()

@@ -14,10 +14,14 @@ public class menu : MonoBehaviour {
 	private int[] scores;
 
 	private int selectedMap;
+	private AudioSource audSource;
+
+	public AudioClip clickSound;
 
 	// Use this for initialization
 	void Start () {
 		selectedMap = 0;
+		audSource = GameObject.Find ("Main Camera").GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -31,17 +35,17 @@ public class menu : MonoBehaviour {
 	}
 
 	public void MapSelect() {
+		audSource.PlayOneShot (clickSound, 0.4f);
+
 		GameObject.Find("Main_Canvas").GetComponent<Animation>().Play("main_canvas_out");
 		GameObject.Find("Map_Canvas").GetComponent<Animation>().Play("map_canvas_in");
-		GameObject.Find ("Start").GetComponent<Button> ().enabled = true;
-		GameObject.Find ("Map_Back").GetComponent<Button> ().enabled = true;
 	}
 
 	public void HighScores() {
+		audSource.PlayOneShot (clickSound, 0.4f);
+
 		GameObject.Find("Hs_Canvas").GetComponent<Animation>().Play("hs_canvas_in");
 		GameObject.Find("Main_Canvas").GetComponent<Animation>().Play("main_canvas_out");
-		GameObject.Find ("Start").GetComponent<Button> ().enabled = true;
-		GameObject.Find ("Hs_Back").GetComponent<Button> ().enabled = true;
 
 		StartCoroutine (getHsFromDb ());
 	}
@@ -52,16 +56,31 @@ public class menu : MonoBehaviour {
 		string[] fields = {"Name: ", "Score: "};
 		string address;
 
-		#if UNITY_EDITOR
-			address = "http://localhost/dotf/geths.php";
+		/*#if UNITY_EDITOR
+		//address = "http://192.168.0.10/dotf/geths.php";
+			address = "https://scrubbylol.github.io/Randy-Nguyen-Website/php/connection.php";
 		#else
 			address = "http://192.168.0.10/dotf/geths.php";
 		#endif
 
-		WWW hs = new WWW ("http://192.168.0.10/dotf/geths.php");
+		WWW con = new WWW (address);
+
+		yield return con; */
+
+		#if UNITY_EDITOR
+		address = "http://192.168.0.10/dotf/geths.php";
+		//address = "https://scrubbylol.github.io/Randy-Nguyen-Website/geths.php";
+		#else
+		address = "http://192.168.0.10/dotf/geths.php";
+		#endif
+
+		WWW hs = new WWW (address);
 
 		yield return hs;
-		Debug.Log(hs.error);
+
+		//Debug.Log (con.text);
+		Debug.Log (hs.text);
+
 		if (hs.error == null) {
 			Debug.Log(hs.error);
 		}
@@ -147,6 +166,8 @@ public class menu : MonoBehaviour {
 	}
 
 	public void ClickMap(int map) {
+		audSource.PlayOneShot (clickSound, 0.4f);
+
 		if (map == 1) {
 			GameObject.Find ("Map1_Select").GetComponent<RawImage> ().enabled = true;
 			GameObject.Find ("Map2_Select").GetComponent<RawImage> ().enabled = false;
@@ -165,20 +186,20 @@ public class menu : MonoBehaviour {
 	}
 
 	public void Back(int back) {
+		audSource.PlayOneShot (clickSound, 0.4f);
+
 		if (back == 1) {
 			GameObject.Find("Map_Canvas").GetComponent<Animation>().Play("map_canvas_out");
 			GameObject.Find("Main_Canvas").GetComponent<Animation>().Play("main_canvas_in");
-			GameObject.Find ("Start").GetComponent<Button> ().enabled = false;
-			GameObject.Find ("Map_Back").GetComponent<Button> ().enabled = false;
 		} else if (back == 2) {
 			GameObject.Find("Hs_Canvas").GetComponent<Animation>().Play("hs_canvas_out");
 			GameObject.Find("Main_Canvas").GetComponent<Animation>().Play("main_canvas_in");
-			GameObject.Find ("Start").GetComponent<Button> ().enabled = false;
-			GameObject.Find ("Hs_Back").GetComponent<Button> ().enabled = false;
 		}
 	}
 
 	public void StartGame() {
+		audSource.PlayOneShot (clickSound, 0.4f);
+
 		if (selectedMap == 1) {
 			SceneManager.LoadScene ("map1_master");
 		} else if (selectedMap == 2) {
@@ -187,10 +208,17 @@ public class menu : MonoBehaviour {
 	}
 
 	public void EndGame() {
+		audSource.PlayOneShot (clickSound, 0.4f);
+
 		#if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPlaying = false;
 		#else
 		Application.Quit();
 		#endif
+	}
+
+	public void SetDif (int mode) {
+		audSource.PlayOneShot (clickSound, 0.4f);
+		PlayerPrefs.SetInt ("diff", mode);
 	}
 }
