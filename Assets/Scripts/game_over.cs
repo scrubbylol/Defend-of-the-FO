@@ -204,4 +204,15 @@ public class game_over : MonoBehaviour {
 			Debug.Log("There was an error adding the highscore: " + hs_post.error);
 		}
 	}
+
+	public void addHsToPlayerPrefs() {
+		int i = 1;
+
+		while (PlayerPrefs.HasKey("hs_" + i + "_name")) {
+			i++;
+		}
+
+		PlayerPrefs.SetString ("hs_" + i + "_name", ((hs_name.text != "") ? hs_name.text : "xxx"));
+		PlayerPrefs.SetInt ("hs_" + i + "_score", gm.score);
+	}
 }
