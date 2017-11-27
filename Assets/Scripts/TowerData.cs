@@ -11,8 +11,8 @@ public class TowerData : MonoBehaviour
 {
     public List<TowerLevel> levels;
     private TowerLevel currentLevel;
-    public TowerLevel CurrentLevel
-    {
+
+    public TowerLevel CurrentLevel {
         //2
         get
         {
@@ -27,7 +27,7 @@ public class TowerData : MonoBehaviour
             GameObject levelVisualization = levels[currentLevelIndex].visualization;
             for (int i = 0; i < levels.Count; i++)
             {
-                if (levelVisualization != null)
+                if (levelVisualization != null) 
                 {
                     if (i == currentLevelIndex)
                     {

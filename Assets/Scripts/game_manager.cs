@@ -46,9 +46,12 @@ public class game_manager : MonoBehaviour {
 		cashText.text = "Cash: " + System.Convert.ToString (cash);
 	}
 
-	public void SubCash(int amt) {
-		cash -= amt;
-		cashText.text = "Cash: " + System.Convert.ToString (cash);
+    public void SubCash(int amt)
+    {
+        if (amt <= cash) {
+            cash -= amt;
+            cashText.text = "Cash: " + System.Convert.ToString(cash);
+        }
 	}
 
 	public void AddScore(int amt) {
