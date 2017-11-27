@@ -100,6 +100,47 @@ public class game_over : MonoBehaviour {
 		}
 	}
 
+	public void getHsFromPlayerPrefs () {
+		ArrayList tmpScores = new ArrayList ();
+		int i = 1;
+
+		while (PlayerPrefs.HasKey("hs_" + i + "_name")) {
+			tmpScores.Add (PlayerPrefs.GetInt ("hs_" + i + "_score"));
+			i++;
+		}
+
+		scores = new int[tmpScores.Count];
+
+		for (int j =0;j<scores.Length;j++) {
+			scores [j] = System.Convert.ToInt32 (tmpScores [j]);
+		}
+
+		sort (scores);
+
+		// If the user score is greater than the top 10 scores from the db, then create a new array and sort that 
+		// and see where in the array it places to get the rank
+		if (checkNewHs ()) {
+			GameObject.Find ("not_hs").SetActive (false);
+
+			ArrayList tmpArray = new ArrayList ();
+			for (int j = 0; j < scores.Length - 1; j++) {
+				tmpArray.Add (scores [j]);
+			}
+
+			tmpArray.Add (gm.score);
+
+			newScores = new int[tmpArray.Count];
+			for (int m = 0; m < newScores.Length; m++) {
+				newScores [m] = System.Convert.ToInt32 (tmpArray [m]);
+			}
+
+			sort (newScores);
+			rank = getRank (newScores, gm.score);
+
+			hs_anim.Play ("new_hs");
+		}
+	}
+
 	// Bubble sort
 	private void sort(int[] arr) {
 		for(int x = 0; x < arr.Length; x++)

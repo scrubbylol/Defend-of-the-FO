@@ -161,7 +161,8 @@ public class game_manager : MonoBehaviour {
 			Destroy (twr);
 		}
 			
-		StartCoroutine (GetComponent<game_over> ().getHsFromDb ());
+		//StartCoroutine (GetComponent<game_over> ().getHsFromDb ());
+		GetComponent<game_over> ().getHsFromPlayerPrefs ();
 	}
 
 	public void Retry() {

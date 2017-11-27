@@ -47,7 +47,8 @@ public class menu : MonoBehaviour {
 		GameObject.Find("Hs_Canvas").GetComponent<Animation>().Play("hs_canvas_in");
 		GameObject.Find("Main_Canvas").GetComponent<Animation>().Play("main_canvas_out");
 
-		StartCoroutine (getHsFromDb ());
+		//StartCoroutine (getHsFromDb ());
+		getHsFromPlayerPrefs();
 	}
 
 	IEnumerator getHsFromDb()
@@ -129,6 +130,44 @@ public class menu : MonoBehaviour {
 			}
 
 			GameObject.Find ("Score_Body").GetComponent<Text> ().text += scores[i] + ((i!=9) ? "\n" : "");
+		}
+	}
+
+	public void getHsFromPlayerPrefs () {
+		ArrayList tmpScores = new ArrayList ();
+		ArrayList tmpNames = new ArrayList ();
+		int i = 1;
+
+		while (PlayerPrefs.HasKey("hs_" + i + "_name")) {
+			tmpScores.Add (PlayerPrefs.GetInt ("hs_" + i + "_score"));
+			tmpNames.Add (PlayerPrefs.GetString ("hs_" + i + "_name"));
+			i++;
+		}
+
+		scores = new int[tmpScores.Count];
+		names = new string[tmpNames.Count];
+
+		for (int j =0;j<scores.Length;j++) {
+			scores [j] = System.Convert.ToInt32 (tmpScores [j]);
+			names [j] = System.Convert.ToString (tmpNames [j]);
+		}
+
+		sort ();
+
+		GameObject.Find("Name_Body").GetComponent<Text> ().text =  "";
+		GameObject.Find("Score_Body").GetComponent<Text> ().text =  "";
+
+		for (int k = 0; k < names.Length; k++) {
+			GameObject.Find ("Name_Body").GetComponent<Text> ().text += names [k] + "\n";
+			GameObject.Find ("Score_Body").GetComponent<Text> ().text += scores[k] + "\n";
+		}
+
+		if (names.Length < 10) {
+			int len = 10 - names.Length;
+			for (int l = 0; l < len; l++) {
+				GameObject.Find ("Name_Body").GetComponent<Text> ().text += "xxx" + ((l!=len-1) ? "\n" : "");
+				GameObject.Find ("Score_Body").GetComponent<Text> ().text += "0" + ((l!=len-1) ? "\n" : "");
+			}
 		}
 	}
 
