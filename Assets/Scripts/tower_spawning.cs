@@ -31,7 +31,7 @@ public class tower_spawning : MonoBehaviour {
     }
     private bool canPlaceTower()
     {
-        return archer_tower == null && wizard_tower == null;
+		return archer_tower == null && wizard_tower == null && gm.cash >= 30;
     }
     void OnMouseUp()
     {
@@ -100,7 +100,6 @@ public class tower_spawning : MonoBehaviour {
     }
     private void placeArcherTower()
     {
-        Debug.Log("Test");
         //3
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         archer_tower = (GameObject)

@@ -17,7 +17,7 @@ public class cat_behavior : MonoBehaviour {
 		Transform healthBarTransform = transform.Find ("HealthBar");
 		healthBar = healthBarTransform.gameObject.GetComponent<HealthBar> ();
 		if (isDamaged == 0) {
-			if (healthBar.currentHealth < 100) {
+			if (healthBar.maxHealth/healthBar.currentHealth != 1 ) {
 				gameObject.GetComponent<enemy_movement> ().speed = 2.5f;
 				anim.SetInteger ("state", 1);
 				isDamaged = 1;

@@ -29,7 +29,7 @@ public class game_manager : MonoBehaviour {
 	void Start () {
 		//lives = 10;
 		score = 0;
-		waves = 4;
+		//waves = 4;
 		//cash = 300;
 		slimeBabiesAlive = 0;
 		newHighScore = false;
@@ -71,7 +71,6 @@ public class game_manager : MonoBehaviour {
 		foreach (GameObject enem in enemies) {
 			if (enem.GetComponent<enemy_movement> ().isDying) {
 				alive -= 1;
-				Debug.Log ("RUN??");
 			}
 		}
 
