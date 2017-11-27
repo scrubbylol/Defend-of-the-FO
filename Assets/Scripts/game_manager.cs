@@ -18,6 +18,7 @@ public class game_manager : MonoBehaviour {
 	public Text goWavesText;
 	public Text cashText;
 	public Text countdownText;
+	public int difficulty;
 
 	public enemy_spawning spawner;
 
@@ -28,19 +29,22 @@ public class game_manager : MonoBehaviour {
 	void Start () {
 		//lives = 10;
 		score = 0;
-		//waves = 4;
+		waves = 4;
 		//cash = 300;
 		slimeBabiesAlive = 0;
 		newHighScore = false;
 
 		StartCountDown ();
+		getDifficulty ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
 	}
-
+	public void getDifficulty(){
+		difficulty = PlayerPrefs.GetInt ("diff",0);
+	}
 	public void AddCash(int amt) {
 		cash += amt;
 		cashText.text = "Cash: " + System.Convert.ToString (cash);
@@ -62,7 +66,6 @@ public class game_manager : MonoBehaviour {
 
 	public bool CheckEnemiesAlive(int type) {
 		int alive = GameObject.FindGameObjectsWithTag ("Enemy").Length;
-		Debug.Log (alive);
 
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
 		foreach (GameObject enem in enemies) {
@@ -88,7 +91,15 @@ public class game_manager : MonoBehaviour {
 			}
 		}
 	}
+	public void setEasy(){
+		difficulty = 8;
+	}
+	public void setMed(){
 
+	}
+	public void setHard(){
+
+	}
 	public void StartCountDown() {
 		Debug.Log ("call");
 		GameObject[] bullets = GameObject.FindGameObjectsWithTag ("Bullet");

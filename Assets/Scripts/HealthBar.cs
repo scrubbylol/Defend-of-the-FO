@@ -6,7 +6,9 @@ public class HealthBar : MonoBehaviour {
 	private float maxHealth = 50;
 	public float currentHealth = 50;
 	private float originalScale;
+	private GameObject ob;
 	private game_manager gm;
+	private int diff;
 	// Use this for initialization
 	void Start () {
 		gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
@@ -21,7 +23,10 @@ public class HealthBar : MonoBehaviour {
 			maxHealth = 300;
 		} else if (gm.waves == 5) {
 			maxHealth = 350;
-			if (gameObject.name.Equals ("enemy6(Clone)")) {
+			Debug.Log ("SMALL SLIMES?");
+			ob = gameObject.transform.parent.gameObject;
+			if (ob.name.Equals ("enemy6(Clone)")) {
+				Debug.Log ("SMALL SLIMES");
 				maxHealth = 100;
 			}
 		} else if (gm.waves == 6) {
@@ -46,6 +51,16 @@ public class HealthBar : MonoBehaviour {
 			maxHealth = 1000;
 		} else {
 			maxHealth = 2000;
+		}
+		diff = gm.difficulty;
+		Debug.Log ("THE DIFF IN MANAGER IS" + diff);
+		Debug.Log (diff);
+		if (diff == 1) {
+			maxHealth = maxHealth / 2;
+		} else if (diff == 2) {
+			maxHealth = maxHealth;
+		} else {
+			maxHealth = maxHealth * 2;
 		}
 		currentHealth = maxHealth;
 	}
