@@ -50,7 +50,7 @@ public class game_manager : MonoBehaviour {
 
 	}
 	public void getDifficulty(){
-		difficulty = PlayerPrefs.GetInt ("diff",0);
+		difficulty = PlayerPrefs.GetInt ("diff",2);
 	}
 	public void AddCash(int amt) {
 		cash += amt;

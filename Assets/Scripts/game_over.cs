@@ -104,8 +104,19 @@ public class game_over : MonoBehaviour {
 		ArrayList tmpScores = new ArrayList ();
 		int i = 1;
 
+		string tempDif;
+		if (gm.difficulty == 1) {
+			tempDif = "Easy";
+		} else if (gm.difficulty == 2) {
+			tempDif = "Medium";
+		} else {
+			tempDif = "Hard";
+		}
+
 		while (PlayerPrefs.HasKey("hs_" + i + "_name")) {
-			tmpScores.Add (PlayerPrefs.GetInt ("hs_" + i + "_score"));
+			if (PlayerPrefs.GetString ("hs_" + i + "_difficulty").Equals (tempDif)) {
+				tmpScores.Add (PlayerPrefs.GetInt ("hs_" + i + "_score"));
+			}
 			i++;
 		}
 
@@ -222,5 +233,16 @@ public class game_over : MonoBehaviour {
 
 		PlayerPrefs.SetString ("hs_" + i + "_name", ((hs_name.text != "") ? hs_name.text : "xxx"));
 		PlayerPrefs.SetInt ("hs_" + i + "_score", gm.score);
+
+		string tempDif;
+		if (gm.difficulty == 1) {
+			tempDif = "Easy";
+		} else if (gm.difficulty == 2) {
+			tempDif = "Medium";
+		} else {
+			tempDif = "Hard";
+		}
+
+		PlayerPrefs.SetString ("hs_" + i + "_difficulty", tempDif);
 	}
 }

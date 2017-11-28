@@ -17,11 +17,13 @@ public class menu : MonoBehaviour {
 	private AudioSource audSource;
 
 	public AudioClip clickSound;
+	private string hs_dif;
 
 	// Use this for initialization
 	void Start () {
 		selectedMap = 0;
 		audSource = GameObject.Find ("Main Camera").GetComponent<AudioSource> ();
+		hs_dif = "Easy";
 	}
 	
 	// Update is called once per frame
@@ -48,7 +50,7 @@ public class menu : MonoBehaviour {
 		GameObject.Find("Main_Canvas").GetComponent<Animation>().Play("main_canvas_out");
 
 		//StartCoroutine (getHsFromDb ());
-		getHsFromPlayerPrefs();
+		getHsFromPlayerPrefs(hs_dif);
 	}
 
 	IEnumerator getHsFromDb()
@@ -133,14 +135,17 @@ public class menu : MonoBehaviour {
 		}
 	}
 
-	public void getHsFromPlayerPrefs () {
+	public void getHsFromPlayerPrefs (string dif) {
 		ArrayList tmpScores = new ArrayList ();
 		ArrayList tmpNames = new ArrayList ();
+		ArrayList tmpDiffculties = new ArrayList ();
 		int i = 1;
 
 		while (PlayerPrefs.HasKey("hs_" + i + "_name")) {
-			tmpScores.Add (PlayerPrefs.GetInt ("hs_" + i + "_score"));
-			tmpNames.Add (PlayerPrefs.GetString ("hs_" + i + "_name"));
+			if (PlayerPrefs.GetString ("hs_" + i + "_difficulty").Equals (dif)) {
+				tmpScores.Add (PlayerPrefs.GetInt ("hs_" + i + "_score"));
+				tmpNames.Add (PlayerPrefs.GetString ("hs_" + i + "_name"));
+			}
 			i++;
 		}
 
@@ -261,5 +266,38 @@ public class menu : MonoBehaviour {
 	public void SetDif (int mode) {
 		audSource.PlayOneShot (clickSound, 0.6f);
 		PlayerPrefs.SetInt ("diff", mode);
+	}
+
+	public void Hs_Dif(int dir) {
+		string dif = GameObject.Find ("Hs_Difficulty_Text").GetComponent<Text> ().text;
+
+		// Right
+		if (dir == 1) {
+			if (dif.Equals ("Easy")) {
+				GameObject.Find ("Hs_Difficulty_Text").GetComponent<Text> ().text = "Medium";
+				audSource.PlayOneShot (clickSound, 0.6f);
+				hs_dif = "Medium";
+				getHsFromPlayerPrefs (hs_dif);
+			} else if (dif.Equals ("Medium")) {
+				GameObject.Find ("Hs_Difficulty_Text").GetComponent<Text> ().text = "Hard";
+				audSource.PlayOneShot (clickSound, 0.6f);
+				hs_dif = "Hard";
+				getHsFromPlayerPrefs (hs_dif);
+			}
+		} 
+		// Left
+		else if (dir == 2) {
+			if (dif.Equals ("Medium")) {
+				GameObject.Find ("Hs_Difficulty_Text").GetComponent<Text> ().text = "Easy";
+				audSource.PlayOneShot (clickSound, 0.6f);
+				hs_dif = "Easy";
+				getHsFromPlayerPrefs (hs_dif);
+			} else if (dif.Equals ("Hard")) {
+				GameObject.Find ("Hs_Difficulty_Text").GetComponent<Text> ().text = "Medium";
+				audSource.PlayOneShot (clickSound, 0.6f);
+				hs_dif = "Medium";
+				getHsFromPlayerPrefs (hs_dif);
+			}
+		}
 	}
 }
