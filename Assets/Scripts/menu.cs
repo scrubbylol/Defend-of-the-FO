@@ -35,14 +35,14 @@ public class menu : MonoBehaviour {
 	}
 
 	public void MapSelect() {
-		audSource.PlayOneShot (clickSound, 0.4f);
+		audSource.PlayOneShot (clickSound, 0.6f);
 
 		GameObject.Find("Main_Canvas").GetComponent<Animation>().Play("main_canvas_out");
 		GameObject.Find("Map_Canvas").GetComponent<Animation>().Play("map_canvas_in");
 	}
 
 	public void HighScores() {
-		audSource.PlayOneShot (clickSound, 0.4f);
+		audSource.PlayOneShot (clickSound, 0.6f);
 
 		GameObject.Find("Hs_Canvas").GetComponent<Animation>().Play("hs_canvas_in");
 		GameObject.Find("Main_Canvas").GetComponent<Animation>().Play("main_canvas_out");
@@ -205,7 +205,7 @@ public class menu : MonoBehaviour {
 	}
 
 	public void ClickMap(int map) {
-		audSource.PlayOneShot (clickSound, 0.4f);
+		audSource.PlayOneShot (clickSound, 0.6f);
 
 		if (map == 1) {
 			GameObject.Find ("Map1_Select").GetComponent<RawImage> ().enabled = true;
@@ -225,7 +225,7 @@ public class menu : MonoBehaviour {
 	}
 
 	public void Back(int back) {
-		audSource.PlayOneShot (clickSound, 0.4f);
+		audSource.PlayOneShot (clickSound, 0.6f);
 
 		if (back == 1) {
 			GameObject.Find("Map_Canvas").GetComponent<Animation>().Play("map_canvas_out");
@@ -237,17 +237,19 @@ public class menu : MonoBehaviour {
 	}
 
 	public void StartGame() {
-		audSource.PlayOneShot (clickSound, 0.4f);
+		audSource.PlayOneShot (clickSound, 0.6f);
 
 		if (selectedMap == 1) {
 			SceneManager.LoadScene ("map1_master");
 		} else if (selectedMap == 2) {
 			SceneManager.LoadScene ("map2_master");
+		} else if (selectedMap == 3) {
+			SceneManager.LoadScene ("map3_master");
 		}
 	}
 
 	public void EndGame() {
-		audSource.PlayOneShot (clickSound, 0.4f);
+		audSource.PlayOneShot (clickSound, 0.6f);
 
 		#if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPlaying = false;
@@ -257,7 +259,7 @@ public class menu : MonoBehaviour {
 	}
 
 	public void SetDif (int mode) {
-		audSource.PlayOneShot (clickSound, 0.4f);
+		audSource.PlayOneShot (clickSound, 0.6f);
 		PlayerPrefs.SetInt ("diff", mode);
 	}
 }

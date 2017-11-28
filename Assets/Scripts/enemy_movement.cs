@@ -9,6 +9,7 @@ public class enemy_movement : MonoBehaviour {
 
 	public Vector2[] movePositions = new Vector2[12];
 	public Vector2[] movePositions2 = new Vector2[5];
+	public Vector2[] movePositions3 = new Vector2[5];
 
     private int currentWaypoint = 0;
 	public int nextMove = 0;
@@ -70,6 +71,27 @@ public class enemy_movement : MonoBehaviour {
 					}
 					for (int i = 0; i < movePositions2.Length - 1; i++) {
 						movePositions2 [i] = movePositions2 [i + 1];
+						currentWaypoint++;
+
+					}
+				}
+			}
+		} else if (SceneManager.GetActiveScene ().name.Equals ("map3_master")) {
+			Vector2 nextPosition = movePositions3 [0];
+			string name = gameObject.name;
+			if (name == "enemy6(Clone)") {
+				nextPosition = movePositions3 [nextMove];
+			} else {
+				nextPosition = movePositions3 [0];
+			}
+			if (stopMove == 0) {
+				transform.position = Vector2.MoveTowards (transform.position, nextPosition, speed * Time.deltaTime);
+				if (transform.position.x == nextPosition.x && transform.position.y == nextPosition.y) {
+					if (name != "enemy6(Clone)") {
+						nextMove++;
+					}
+					for (int i = 0; i < movePositions3.Length - 1; i++) {
+						movePositions3 [i] = movePositions3 [i + 1];
 						currentWaypoint++;
 
 					}

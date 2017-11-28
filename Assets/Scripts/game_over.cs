@@ -109,9 +109,17 @@ public class game_over : MonoBehaviour {
 			i++;
 		}
 
-		scores = new int[tmpScores.Count];
+		if (tmpScores.Count < 10) {
+			int len = 10 - tmpScores.Count;
+			scores = new int[tmpScores.Count + len];
+			for (int k = 0; k < len; k++) {
+				tmpScores.Add (0);
+			}
+		} else {
+			scores = new int[tmpScores.Count];
+		}
 
-		for (int j =0;j<scores.Length;j++) {
+		for (int j = 0; j < scores.Length; j++) {
 			scores [j] = System.Convert.ToInt32 (tmpScores [j]);
 		}
 

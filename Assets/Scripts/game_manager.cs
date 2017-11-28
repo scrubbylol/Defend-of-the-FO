@@ -34,7 +34,6 @@ public class game_manager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		audSource = GameObject.Find ("Main Camera").GetComponent<AudioSource> ();
-
 		//lives = 10;
 		score = 0;
 		//waves = 4;
@@ -81,8 +80,6 @@ public class game_manager : MonoBehaviour {
 				alive -= 1;
 			}
 		}
-
-		Debug.Log (alive);
 
 		if (waves != 5) {
 			if (alive == 0 && spawner.allEnemiesSpawned) {
@@ -169,7 +166,8 @@ public class game_manager : MonoBehaviour {
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 
 		if (newHighScore) {
-			StartCoroutine (GetComponent <game_over> ().addHsToDb ());
+			//StartCoroutine (GetComponent <game_over> ().addHsToDb ());
+			GetComponent<game_over>().addHsToPlayerPrefs();
 		}
 	}
 
@@ -177,19 +175,20 @@ public class game_manager : MonoBehaviour {
 		SceneManager.LoadScene ("menu");
 
 		if (newHighScore) {
-			StartCoroutine (GetComponent <game_over> ().addHsToDb ());
+			//StartCoroutine (GetComponent <game_over> ().addHsToDb ());
+			GetComponent<game_over>().addHsToPlayerPrefs();
 		}
 	}
 
 	public void playConstructionSound() {
-		audSource.PlayOneShot (constructionSound, 0.85f);
+		audSource.PlayOneShot (constructionSound, 0.9f);
 	}
 
 	public void playGameOverSound() {
-		audSource.PlayOneShot (gameOverSound, 0.85f);
+		audSource.PlayOneShot (gameOverSound, 0.9f);
 	}
 
 	public void playWaveCompleteSound() {
-		audSource.PlayOneShot (waveCompleteSound, 0.85f);
+		audSource.PlayOneShot (waveCompleteSound, 0.9f);
 	}
 }

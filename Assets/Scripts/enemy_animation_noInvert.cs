@@ -7,6 +7,7 @@ public class enemy_animation_noInvert: MonoBehaviour {
 
 	public Vector2[] movePositions = new Vector2[5];
 	public Vector2 movePositions2;
+	public Vector2[] movePositions3 = new Vector2[2];
 	Animator anim;
 	public int nextAnime = 0;
 	public int whereToMove = 0;
@@ -74,6 +75,18 @@ public class enemy_animation_noInvert: MonoBehaviour {
 		} else if (SceneManager.GetActiveScene ().name.Equals ("map2_master")) {
 			if (transform.position.x == movePositions2.x &&
 				transform.position.y == movePositions2.y && anim.GetInteger("state") == 0) {
+				anim.SetInteger ("state", 2);
+				Destroy (this.gameObject, anim.GetCurrentAnimatorStateInfo (0).length);
+			}
+		} else if (SceneManager.GetActiveScene ().name.Equals ("map3_master")) {
+			if ((transform.position.x == movePositions3 [0].x &&
+				transform.position.y == movePositions3 [0].y) || whereToMove == 1) {
+				Vector3 theScale = transform.localScale;
+				theScale.x = theScale.x * -1;
+				transform.localScale = theScale;
+				nextAnime = 1;
+			} else if (transform.position.x == movePositions3[1].x &&
+				transform.position.y == movePositions3[1].y && anim.GetInteger("state") == 0) {
 				anim.SetInteger ("state", 2);
 				Destroy (this.gameObject, anim.GetCurrentAnimatorStateInfo (0).length);
 			}
