@@ -31,7 +31,7 @@ public class tower_spawning : MonoBehaviour {
     }
     private bool canPlaceTower()
     {
-		return archer_tower == null && wizard_tower == null && gm.cash >= 30;
+		return archer_tower == null && wizard_tower == null && gm.cash >= 30 && !GameObject.Find ("Options_Canvas").GetComponent<Canvas> ().enabled;
     }
     void OnMouseUp()
     {

@@ -25,14 +25,22 @@ public class game_manager : MonoBehaviour {
 	public bool newHighScore;
 	public int slimeBabiesAlive;
 
+	private int optionMenu;
+
 	// Audio Stuff
 	private AudioSource audSource;
+	public AudioClip clickSound;
 	public AudioClip constructionSound;
 	public AudioClip gameOverSound;
 	public AudioClip waveCompleteSound;
 
 	// Use this for initialization
 	void Start () {
+		AudioSource musicAudio = GameObject.Find ("Music_Control").GetComponent<AudioSource> ();
+		musicAudio.volume = PlayerPrefs.GetInt ("Music") / 100f;
+
+		SetOptionsSliders ();
+
 		audSource = GameObject.Find ("Main Camera").GetComponent<AudioSource> ();
 		//lives = 10;
 		score = 0;
@@ -165,7 +173,7 @@ public class game_manager : MonoBehaviour {
 	public void Retry() {
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 
-		if (newHighScore) {
+		if (newHighScore && !GameObject.Find("Options_Canvas").GetComponent<Canvas>().enabled) {
 			//StartCoroutine (GetComponent <game_over> ().addHsToDb ());
 			GetComponent<game_over>().addHsToPlayerPrefs();
 		}
@@ -174,21 +182,131 @@ public class game_manager : MonoBehaviour {
 	public void BackToMain() {
 		SceneManager.LoadScene ("menu");
 
-		if (newHighScore) {
+		if (newHighScore && !GameObject.Find("Options_Canvas").GetComponent<Canvas>().enabled) {
 			//StartCoroutine (GetComponent <game_over> ().addHsToDb ());
 			GetComponent<game_over>().addHsToPlayerPrefs();
 		}
 	}
 
 	public void playConstructionSound() {
-		audSource.PlayOneShot (constructionSound, 0.9f);
+		audSource.PlayOneShot (constructionSound, PlayerPrefs.GetInt("Sound")/100f);
 	}
 
 	public void playGameOverSound() {
-		audSource.PlayOneShot (gameOverSound, 0.9f);
+		audSource.PlayOneShot (gameOverSound, PlayerPrefs.GetInt("Sound")/100f);
 	}
 
 	public void playWaveCompleteSound() {
-		audSource.PlayOneShot (waveCompleteSound, 0.9f);
+		audSource.PlayOneShot (waveCompleteSound, PlayerPrefs.GetInt("Sound")/100f);
+	}
+
+	private void SetOptionsSliders() {
+		int music = PlayerPrefs.GetInt ("Music");
+		GameObject.Find ("Music_Slider").GetComponent<Slider> ().value = music;
+		GameObject.Find ("Music_Percent").GetComponent<Text> ().text = System.Convert.ToString (music) + "%";
+
+		int sound = PlayerPrefs.GetInt ("Sound");
+		GameObject.Find ("Sound_Slider").GetComponent<Slider> ().value = sound;
+		GameObject.Find ("Sound_Percent").GetComponent<Text> ().text = System.Convert.ToString (sound) + "%";
+	}
+
+	public void ShowCloseOptions(int btn) {
+		audSource.PlayOneShot (clickSound, PlayerPrefs.GetInt("Sound")/100f);
+		if (btn == 1) {
+			GameObject.Find ("Options_Canvas").GetComponent<Canvas> ().enabled = true;
+		} else {
+			GameObject.Find ("Options_Canvas").GetComponent<Canvas> ().enabled = false;
+		}
+	}
+
+	public void OptionsSliderChange(int slider) {
+		// 1 = Music
+		if (slider == 1) {
+			int nxtMusic = System.Convert.ToInt32 (GameObject.Find ("Music_Slider").GetComponent<Slider> ().value);
+			PlayerPrefs.SetInt ("Music", nxtMusic);
+			GameObject.Find ("Music_Percent").GetComponent<Text> ().text = System.Convert.ToString (nxtMusic) + "%";
+
+			AudioSource musicAudio = GameObject.Find ("Music_Control").GetComponent<AudioSource> ();
+			musicAudio.volume = PlayerPrefs.GetInt ("Music") / 100f;
+		}
+		// 2 = Sound
+		else if (slider == 2) {
+			int nxtSound = System.Convert.ToInt32 (GameObject.Find ("Sound_Slider").GetComponent<Slider> ().value);
+			PlayerPrefs.SetInt ("Sound", nxtSound);
+			GameObject.Find ("Sound_Percent").GetComponent<Text> ().text = System.Convert.ToString (nxtSound) + "%";
+		}
+	}
+
+	public void OptionsRestartQuit(int btn) {
+		audSource.PlayOneShot (clickSound, PlayerPrefs.GetInt("Sound")/100f);
+
+		// Restart
+		if (btn == 1) {
+			GameObject.Find ("Options_Text").GetComponent<Text> ().text = "Are you sure you want to RESTART the game?";
+			optionMenu = 1;
+		} 
+		// Quit
+		else {
+			GameObject.Find ("Options_Text").GetComponent<Text> ().text = "Are you sure you want to QUIT the game?";
+			optionMenu = 2;
+		} 
+
+		GameObject.Find ("Options_Text").GetComponent<Text> ().enabled = true;
+		GameObject.Find ("Yes_Button").GetComponent<Image> ().enabled = true;
+		GameObject.Find ("Yes_Button").GetComponent<Button>().interactable = true;
+		GameObject.Find ("No_Button").GetComponent<Image> ().enabled = true;
+		GameObject.Find ("No_Button").GetComponent<Button>().interactable = true;
+		GameObject.Find ("Yes_Text").GetComponent<Text> ().enabled = true;
+		GameObject.Find ("No_Text").GetComponent<Text>().enabled = true;
+		GameObject.Find ("Music_Slider").GetComponent<Slider> ().interactable = false;
+		GameObject.Find ("Music_Slider").GetComponent<Slider> ().enabled = false;
+		GameObject.Find ("Music_Text").GetComponent<Text> ().enabled = false;
+		GameObject.Find ("Music_Back").GetComponent<Image> ().enabled = false;
+		GameObject.Find ("Music_Percent").GetComponent<Text> ().enabled = false;
+		GameObject.Find ("Sound_Slider").GetComponent<Slider> ().interactable = false;
+		GameObject.Find ("Sound_Slider").GetComponent<Slider> ().enabled = false;
+		GameObject.Find ("Sound_Text").GetComponent<Text> ().enabled = false;
+		GameObject.Find ("Sound_Back").GetComponent<Image> ().enabled = false;
+		GameObject.Find ("Sound_Percent").GetComponent<Text> ().enabled = false;
+		GameObject.Find ("Close_Button").GetComponent<Image> ().enabled = false;
+		GameObject.Find ("Close_Button").GetComponent<Button> ().interactable = false;
+		GameObject.Find ("Close_Text").GetComponent<Text> ().enabled = false;
+	}
+
+	public void OptionsYesNo(int btn) {
+		audSource.PlayOneShot (clickSound, PlayerPrefs.GetInt("Sound")/100f);
+
+		// Yes
+		if (btn == 1) {
+			if (optionMenu == 1) {
+				Retry ();
+			} else {
+				BackToMain ();
+			}
+		} 
+		// No
+		else if (btn == 2) {
+			GameObject.Find ("Options_Text").GetComponent<Text> ().enabled = false;
+			GameObject.Find ("Yes_Button").GetComponent<Image> ().enabled = false;
+			GameObject.Find ("Yes_Button").GetComponent<Button>().interactable = false;
+			GameObject.Find ("No_Button").GetComponent<Image> ().enabled = false;
+			GameObject.Find ("No_Button").GetComponent<Button>().interactable = false;
+			GameObject.Find ("Yes_Text").GetComponent<Text> ().enabled = false;
+			GameObject.Find ("No_Text").GetComponent<Text>().enabled = false;
+			GameObject.Find ("Music_Slider").GetComponent<Slider> ().interactable = true;
+			GameObject.Find ("Music_Slider").GetComponent<Slider> ().enabled = true;
+			GameObject.Find ("Music_Text").GetComponent<Text> ().enabled = true;
+			GameObject.Find ("Music_Back").GetComponent<Image> ().enabled = true;
+			GameObject.Find ("Music_Percent").GetComponent<Text> ().enabled = true;
+			GameObject.Find ("Sound_Slider").GetComponent<Slider> ().interactable = true;
+			GameObject.Find ("Sound_Slider").GetComponent<Slider> ().enabled = true;
+			GameObject.Find ("Sound_Text").GetComponent<Text> ().enabled = true;
+			GameObject.Find ("Sound_Back").GetComponent<Image> ().enabled = true;
+			GameObject.Find ("Sound_Percent").GetComponent<Text> ().enabled = true;
+			GameObject.Find ("Close_Button").GetComponent<Image> ().enabled = true;
+			GameObject.Find ("Close_Button").GetComponent<Button> ().interactable = true;
+			GameObject.Find ("Close_Text").GetComponent<Text> ().enabled = true;
+			optionMenu = 0;
+		}
 	}
 }

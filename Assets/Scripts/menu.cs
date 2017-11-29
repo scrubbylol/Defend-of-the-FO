@@ -24,6 +24,16 @@ public class menu : MonoBehaviour {
 		selectedMap = 0;
 		audSource = GameObject.Find ("Main Camera").GetComponent<AudioSource> ();
 		hs_dif = "Easy";
+
+		if (!PlayerPrefs.HasKey ("Sound")) {
+			PlayerPrefs.SetInt ("Sound", 100);
+		} 
+
+		if (!PlayerPrefs.HasKey ("Music")) {
+			PlayerPrefs.SetInt ("Music", 100);
+		} 
+
+		SetOptionsSliders ();
 	}
 	
 	// Update is called once per frame
@@ -37,20 +47,52 @@ public class menu : MonoBehaviour {
 	}
 
 	public void MapSelect() {
-		audSource.PlayOneShot (clickSound, 0.6f);
+		audSource.PlayOneShot (clickSound, PlayerPrefs.GetInt("Sound")/100f);
 
 		GameObject.Find("Main_Canvas").GetComponent<Animation>().Play("main_canvas_out");
 		GameObject.Find("Map_Canvas").GetComponent<Animation>().Play("map_canvas_in");
 	}
 
 	public void HighScores() {
-		audSource.PlayOneShot (clickSound, 0.6f);
+		audSource.PlayOneShot (clickSound, PlayerPrefs.GetInt("Sound")/100f);
 
 		GameObject.Find("Hs_Canvas").GetComponent<Animation>().Play("hs_canvas_in");
 		GameObject.Find("Main_Canvas").GetComponent<Animation>().Play("main_canvas_out");
 
 		//StartCoroutine (getHsFromDb ());
 		getHsFromPlayerPrefs(hs_dif);
+	}
+
+	public void Options() {
+		audSource.PlayOneShot (clickSound, PlayerPrefs.GetInt("Sound")/100f);
+
+		GameObject.Find("Options_Canvas").GetComponent<Animation>().Play("options_canvas_in");
+		GameObject.Find("Main_Canvas").GetComponent<Animation>().Play("main_canvas_out");
+	}
+
+	private void SetOptionsSliders() {
+		int music = PlayerPrefs.GetInt ("Music");
+		GameObject.Find ("Music_Slider").GetComponent<Slider> ().value = music;
+		GameObject.Find ("Music_Percent").GetComponent<Text> ().text = System.Convert.ToString (music) + "%";
+
+		int sound = PlayerPrefs.GetInt ("Sound");
+		GameObject.Find ("Sound_Slider").GetComponent<Slider> ().value = sound;
+		GameObject.Find ("Sound_Percent").GetComponent<Text> ().text = System.Convert.ToString (sound) + "%";
+	}
+
+	public void OptionsSliderChange(int slider) {
+		// 1 = Music
+		if (slider == 1) {
+			int nxtMusic = System.Convert.ToInt32 (GameObject.Find ("Music_Slider").GetComponent<Slider> ().value);
+			PlayerPrefs.SetInt ("Music", nxtMusic);
+			GameObject.Find ("Music_Percent").GetComponent<Text> ().text = System.Convert.ToString (nxtMusic) + "%";
+		}
+		// 2 = Sound
+		else if (slider == 2) {
+			int nxtSound = System.Convert.ToInt32 (GameObject.Find ("Sound_Slider").GetComponent<Slider> ().value);
+			PlayerPrefs.SetInt ("Sound", nxtSound);
+			GameObject.Find ("Sound_Percent").GetComponent<Text> ().text = System.Convert.ToString (nxtSound) + "%";
+		}
 	}
 
 	IEnumerator getHsFromDb()
@@ -210,7 +252,7 @@ public class menu : MonoBehaviour {
 	}
 
 	public void ClickMap(int map) {
-		audSource.PlayOneShot (clickSound, 0.6f);
+		audSource.PlayOneShot (clickSound, PlayerPrefs.GetInt("Sound")/100f);
 
 		if (map == 1) {
 			GameObject.Find ("Map1_Select").GetComponent<RawImage> ().enabled = true;
@@ -230,7 +272,7 @@ public class menu : MonoBehaviour {
 	}
 
 	public void Back(int back) {
-		audSource.PlayOneShot (clickSound, 0.6f);
+		audSource.PlayOneShot (clickSound, PlayerPrefs.GetInt("Sound")/100f);
 
 		if (back == 1) {
 			GameObject.Find("Map_Canvas").GetComponent<Animation>().Play("map_canvas_out");
@@ -238,11 +280,14 @@ public class menu : MonoBehaviour {
 		} else if (back == 2) {
 			GameObject.Find("Hs_Canvas").GetComponent<Animation>().Play("hs_canvas_out");
 			GameObject.Find("Main_Canvas").GetComponent<Animation>().Play("main_canvas_in");
+		} else if (back == 3) {
+			GameObject.Find("Options_Canvas").GetComponent<Animation>().Play("options_canvas_out");
+			GameObject.Find("Main_Canvas").GetComponent<Animation>().Play("main_canvas_in");
 		}
 	}
 
 	public void StartGame() {
-		audSource.PlayOneShot (clickSound, 0.6f);
+		audSource.PlayOneShot (clickSound, PlayerPrefs.GetInt("Sound")/100f);
 
 		if (selectedMap == 1) {
 			SceneManager.LoadScene ("map1_master");
@@ -254,7 +299,7 @@ public class menu : MonoBehaviour {
 	}
 
 	public void EndGame() {
-		audSource.PlayOneShot (clickSound, 0.6f);
+		audSource.PlayOneShot (clickSound, PlayerPrefs.GetInt("Sound")/100f);
 
 		#if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPlaying = false;
@@ -264,7 +309,7 @@ public class menu : MonoBehaviour {
 	}
 
 	public void SetDif (int mode) {
-		audSource.PlayOneShot (clickSound, 0.6f);
+		audSource.PlayOneShot (clickSound, PlayerPrefs.GetInt("Sound")/100f);
 		PlayerPrefs.SetInt ("diff", mode);
 	}
 
@@ -275,12 +320,12 @@ public class menu : MonoBehaviour {
 		if (dir == 1) {
 			if (dif.Equals ("Easy")) {
 				GameObject.Find ("Hs_Difficulty_Text").GetComponent<Text> ().text = "Medium";
-				audSource.PlayOneShot (clickSound, 0.6f);
+				audSource.PlayOneShot (clickSound, PlayerPrefs.GetInt("Sound")/100f);
 				hs_dif = "Medium";
 				getHsFromPlayerPrefs (hs_dif);
 			} else if (dif.Equals ("Medium")) {
 				GameObject.Find ("Hs_Difficulty_Text").GetComponent<Text> ().text = "Hard";
-				audSource.PlayOneShot (clickSound, 0.6f);
+				audSource.PlayOneShot (clickSound, PlayerPrefs.GetInt("Sound")/100f);
 				hs_dif = "Hard";
 				getHsFromPlayerPrefs (hs_dif);
 			}
@@ -289,15 +334,16 @@ public class menu : MonoBehaviour {
 		else if (dir == 2) {
 			if (dif.Equals ("Medium")) {
 				GameObject.Find ("Hs_Difficulty_Text").GetComponent<Text> ().text = "Easy";
-				audSource.PlayOneShot (clickSound, 0.6f);
+				audSource.PlayOneShot (clickSound, PlayerPrefs.GetInt("Sound")/100f);
 				hs_dif = "Easy";
 				getHsFromPlayerPrefs (hs_dif);
 			} else if (dif.Equals ("Hard")) {
 				GameObject.Find ("Hs_Difficulty_Text").GetComponent<Text> ().text = "Medium";
-				audSource.PlayOneShot (clickSound, 0.6f);
+				audSource.PlayOneShot (clickSound, PlayerPrefs.GetInt("Sound")/100f);
 				hs_dif = "Medium";
 				getHsFromPlayerPrefs (hs_dif);
 			}
 		}
 	}
+
 }
