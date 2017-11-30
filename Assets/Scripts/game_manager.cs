@@ -19,7 +19,7 @@ public class game_manager : MonoBehaviour {
 	public Text cashText;
 	public Text countdownText;
 	public int difficulty;
-	public GameObject gameOverText;
+	private GameObject gameOverText;
 	public int victory = 0;
 	public int lastWaveStarted = 0;
 
@@ -53,8 +53,8 @@ public class game_manager : MonoBehaviour {
 		audSource = GameObject.Find ("Main Camera").GetComponent<AudioSource> ();
 		//lives = 10;
 		score = 0;
-		waves = 10;
-		cash = 1000;
+		//waves = 10;
+		//cash = 1000;
 		slimeBabiesAlive = 0;
 		newHighScore = false;
 
