@@ -53,7 +53,7 @@ public class game_manager : MonoBehaviour {
 		audSource = GameObject.Find ("Main Camera").GetComponent<AudioSource> ();
 
 		//lives = 10;
-		score = 0;
+		//score = 0;
 		//waves = 10;
 		//cash = 1000;
 		slimeBabiesAlive = 0;
@@ -127,18 +127,20 @@ public class game_manager : MonoBehaviour {
 
 	}
 	public void StartCountDown() {
-		GameObject[] bullets = GameObject.FindGameObjectsWithTag ("Bullet");
-		foreach (GameObject blt in bullets) {
-			Destroy (blt);
-		}
+		if (lives > 0) {
+			GameObject[] bullets = GameObject.FindGameObjectsWithTag ("Bullet");
+			foreach (GameObject blt in bullets) {
+				Destroy (blt);
+			}
 
-		if (waves != 0) {
-			playWaveCompleteSound ();
-			AddCash (30);
-		}
+			if (waves != 0) {
+				playWaveCompleteSound ();
+				AddCash (30);
+			}
 
-		countdownText.enabled = true;
-		StartCoroutine (WaitForWave (1));
+			countdownText.enabled = true;
+			StartCoroutine (WaitForWave (1));
+		}
 	}
 
 	private IEnumerator WaitForWave(float time) {

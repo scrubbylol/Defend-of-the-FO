@@ -75,13 +75,12 @@ public class BulletBehaviour : MonoBehaviour {
                                     gm.slimeBabiesAlive -= 1;
                                 }
 
-								if (!gm.CheckEnemiesAlive(1) && gm.lastWaveStarted == 0)
-                                {
+								if (!gm.CheckEnemiesAlive(1) && gm.lastWaveStarted == 0){
 									gm.StartCountDown();
 									if (gm.waves == 14) {
 										gm.lastWaveStarted = 1;
 									}
-                                }
+								}
                             }
                             i++;
                         }
