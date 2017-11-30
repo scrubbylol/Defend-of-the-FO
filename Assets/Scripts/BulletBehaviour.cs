@@ -50,8 +50,7 @@ public class BulletBehaviour : MonoBehaviour {
                         else
                         {
                             target.GetComponent<enemy_movement>().speed = 1;
-
-                        }
+						}
                     }
                     if (splash == true)
                     {
