@@ -30,6 +30,8 @@ public class game_manager : MonoBehaviour {
 
 	private int optionMenu;
 
+	public GameObject lightningBolt;
+
 	// Audio Stuff
 	private AudioSource audSource;
 	public AudioClip clickSound;
@@ -39,6 +41,7 @@ public class game_manager : MonoBehaviour {
 	public AudioClip gameOverSound;
 	public AudioClip waveCompleteSound;
 	public AudioClip victorySound;
+	public AudioClip thunderSound;
 
 
 	// Use this for initialization
@@ -346,6 +349,21 @@ public class game_manager : MonoBehaviour {
 			GameObject.Find ("Close_Button").GetComponent<Button> ().interactable = true;
 			GameObject.Find ("Close_Text").GetComponent<Text> ().enabled = true;
 			optionMenu = 0;
+		}
+	}
+
+	public void lightning() {
+		if (lives > 0) {
+			audSource.PlayOneShot (thunderSound, PlayerPrefs.GetInt ("Sound") / 100f);
+
+			GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+			foreach (GameObject enem in enemies) {
+				GameObject l = Instantiate (lightningBolt, enem.transform.position, Quaternion.identity, enem.transform);
+				enem.GetComponentInChildren<HealthBar> ().SetHealth (enem.GetComponentInChildren<HealthBar> ().GetHealth () / 1.3f);
+				Destroy (l, 0.3f);
+			}
+
+			GameObject.Find ("Lightning").GetComponent<Animation> ().Play ("lightning");
 		}
 	}
 }
