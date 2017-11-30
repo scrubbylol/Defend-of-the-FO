@@ -359,7 +359,7 @@ public class game_manager : MonoBehaviour {
 			GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
 			foreach (GameObject enem in enemies) {
 				GameObject l = Instantiate (lightningBolt, enem.transform.position, Quaternion.identity, enem.transform);
-				enem.GetComponentInChildren<HealthBar> ().SetHealth (enem.GetComponentInChildren<HealthBar> ().GetHealth () / 1.3f);
+				enem.GetComponentInChildren<HealthBar> ().SetHealth (enem.GetComponentInChildren<HealthBar> ().GetHealth () / 1.25f);
 				Destroy (l, 0.3f);
 			}
 
