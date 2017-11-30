@@ -21,6 +21,7 @@ public class game_manager : MonoBehaviour {
 	public int difficulty;
 	public GameObject gameOverText;
 	public int victory = 0;
+	public int lastWaveStarted = 0;
 
 	public enemy_spawning spawner;
 
@@ -52,8 +53,8 @@ public class game_manager : MonoBehaviour {
 		audSource = GameObject.Find ("Main Camera").GetComponent<AudioSource> ();
 		//lives = 10;
 		score = 0;
-		//waves = 14;
-		//cash = 1000;
+		waves = 10;
+		cash = 1000;
 		slimeBabiesAlive = 0;
 		newHighScore = false;
 
@@ -132,7 +133,7 @@ public class game_manager : MonoBehaviour {
 
 		if (waves != 0) {
 			playWaveCompleteSound ();
-			AddCash (50);
+			AddCash (30);
 		}
 
 		countdownText.enabled = true;

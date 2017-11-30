@@ -14,9 +14,9 @@ public class HealthBar : MonoBehaviour {
 		gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
 		originalScale = gameObject.transform.localScale.x;
 		if (gm.waves == 1) {
-			maxHealth = 100;
+			maxHealth = 70;
 		} else if (gm.waves == 2) {
-			maxHealth = 150;
+			maxHealth = 120;
 		} else if (gm.waves == 3) {
 			maxHealth = 250;
 		} else if (gm.waves == 4) {
@@ -46,7 +46,7 @@ public class HealthBar : MonoBehaviour {
 		} else if (gm.waves == 14) {
 			maxHealth = 700;
 		} else if (gm.waves == 15) {
-			maxHealth = 1000;
+			maxHealth = 850;
 		} else {
 			maxHealth = 2000;
 		}
@@ -88,5 +88,5 @@ public class HealthBar : MonoBehaviour {
         if (tmpScale.x < 0)
             tmpScale.x = 0;
         gameObject.transform.localScale = tmpScale;
-    }
+	}
 }

@@ -50,6 +50,7 @@ public class BulletBehaviour : MonoBehaviour {
                         else
                         {
                             target.GetComponent<enemy_movement>().speed = 1;
+
                         }
                     }
                     if (splash == true)
@@ -75,9 +76,12 @@ public class BulletBehaviour : MonoBehaviour {
                                     gm.slimeBabiesAlive -= 1;
                                 }
 
-								if (!gm.CheckEnemiesAlive(1) && gm.waves < 14)
+								if (!gm.CheckEnemiesAlive(1) && gm.lastWaveStarted == 0)
                                 {
 									gm.StartCountDown();
+									if (gm.waves == 14) {
+										gm.lastWaveStarted = 1;
+									}
                                 }
                             }
                             i++;
@@ -100,8 +104,11 @@ public class BulletBehaviour : MonoBehaviour {
 						}
 							
 						if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
-							if (!gm.CheckEnemiesAlive (2)  && gm.waves < 14) {
+							if (!gm.CheckEnemiesAlive (2) && gm.lastWaveStarted == 0) {
 								gm.StartCountDown();
+								if (gm.waves == 14) {
+									gm.lastWaveStarted = 1;
+								}
 							}
 						}
 					}

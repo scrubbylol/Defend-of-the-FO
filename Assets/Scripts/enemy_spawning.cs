@@ -70,6 +70,7 @@ public class enemy_spawning : MonoBehaviour {
 			}else if (gm.waves == 14) {
 				Instantiate (enemy14, whereToSpawn, Quaternion.identity);
 			}else if (gm.waves == 15) {
+				Debug.Log ("WTF?");
 				Instantiate (enemy15, whereToSpawn, Quaternion.identity);
 			}
 
