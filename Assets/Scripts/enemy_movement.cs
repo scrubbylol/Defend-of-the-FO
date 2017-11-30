@@ -19,7 +19,7 @@ public class enemy_movement : MonoBehaviour {
 
 	public float deathTimer;
 
-	public bool isDying;
+	public bool isDying = false;
 
 	Animator anim;
 

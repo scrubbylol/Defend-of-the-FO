@@ -43,13 +43,13 @@ public class BulletBehaviour : MonoBehaviour {
 					gm.AddScore (7);
 				    if (slow == true)
                     {
-                        if (target.GetComponent<enemy_movement>().speed >= 0.25)
+                        if (target.GetComponent<enemy_movement>().speed >= 1)
                         {
-                            target.GetComponent<enemy_movement>().speed = target.GetComponent<enemy_movement>().speed - (float)1;
+                            target.GetComponent<enemy_movement>().speed = target.GetComponent<enemy_movement>().speed - (float)0.5;
                         }
                         else
                         {
-                            target.GetComponent<enemy_movement>().speed = 0;
+                            target.GetComponent<enemy_movement>().speed = 1;
                         }
                     }
                     if (splash == true)
@@ -57,8 +57,6 @@ public class BulletBehaviour : MonoBehaviour {
                         int i = 0;
                         while (i < enemiesInRange.Count)
                         {
-                            Debug.Log(enemiesInRange[i]);
-                            Debug.Log("splashing");
                             Transform healthTransform = enemiesInRange[i].transform.Find("HealthBar");
                             HealthBar health = healthTransform.gameObject.GetComponent<HealthBar>();
                             health.Damage(damage);
@@ -79,13 +77,13 @@ public class BulletBehaviour : MonoBehaviour {
 
 								if (!gm.CheckEnemiesAlive(1) && gm.waves < 14)
                                 {
-									Debug.Log ("STARTING COUNT DOWN");
 									gm.StartCountDown();
                                 }
                             }
                             i++;
                         }
                     }
+                    Debug.Log(target.GetComponent<enemy_movement>().isDying);
 					if (healthBar.GetHealth () <= 0 && !target.GetComponent<enemy_movement>().isDying) {
 						healthBar.SetHealth (0);
 						target.GetComponent<BoxCollider2D> ().isTrigger = false;

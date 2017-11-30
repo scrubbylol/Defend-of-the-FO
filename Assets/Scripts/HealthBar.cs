@@ -85,6 +85,8 @@ public class HealthBar : MonoBehaviour {
 	public void UpdateHealthUI() {
 		Vector3 tmpScale = gameObject.transform.localScale;
 		tmpScale.x = currentHealth / maxHealth * originalScale;
-		gameObject.transform.localScale = tmpScale;
-	}
+        if (tmpScale.x < 0)
+            tmpScale.x = 0;
+        gameObject.transform.localScale = tmpScale;
+    }
 }

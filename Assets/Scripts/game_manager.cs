@@ -125,7 +125,6 @@ public class game_manager : MonoBehaviour {
 
 	}
 	public void StartCountDown() {
-		Debug.Log ("call");
 		GameObject[] bullets = GameObject.FindGameObjectsWithTag ("Bullet");
 		foreach (GameObject blt in bullets) {
 			Destroy (blt);

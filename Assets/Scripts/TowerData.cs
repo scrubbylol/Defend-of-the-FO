@@ -75,7 +75,6 @@ public class TowerData : MonoBehaviour
         {
             CurrentLevel = levels[currentLevelIndex + 1];
         }
-        Debug.Log(levels[currentLevelIndex + 1].cost);
     }
     
 }

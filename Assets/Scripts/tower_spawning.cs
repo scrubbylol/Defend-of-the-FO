@@ -73,7 +73,6 @@ public class tower_spawning : MonoBehaviour {
         else if (canUpgradeArcherTower())
         {
             archer_tower.GetComponent<TowerData>().increaseLevel();
-            Debug.Log("Leveled Up");
             if (archer_tower.GetComponent<TowerData>().levels.IndexOf(archer_tower.GetComponent<TowerData>().CurrentLevel) == 1)
             {
 				gm.playUpgradeSound ();
@@ -90,7 +89,6 @@ public class tower_spawning : MonoBehaviour {
         {
 			
             wizard_tower.GetComponent<TowerData>().increaseLevel();
-            Debug.Log("Leveled Up");
             if (wizard_tower.GetComponent<TowerData>().levels.IndexOf(wizard_tower.GetComponent<TowerData>().CurrentLevel) == 1)
             {
 				gm.playUpgradeSound ();
@@ -107,7 +105,6 @@ public class tower_spawning : MonoBehaviour {
         {
 
             splash_tower.GetComponent<TowerData>().increaseLevel();
-            Debug.Log("Leveled Up");
             if (splash_tower.GetComponent<TowerData>().levels.IndexOf(splash_tower.GetComponent<TowerData>().CurrentLevel) == 1)
             {
                 gm.playUpgradeSound();
