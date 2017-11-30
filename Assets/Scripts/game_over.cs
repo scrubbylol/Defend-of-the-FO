@@ -139,8 +139,9 @@ public class game_over : MonoBehaviour {
 		// If the user score is greater than the top 10 scores from the db, then create a new array and sort that 
 		// and see where in the array it places to get the rank
 		if (checkNewHs ()) {
+			if(GameObject.Find("not_hs") != null )
 			GameObject.Find ("not_hs").SetActive (false);
-
+			Debug.Log ("FOUND A NEW HS");
 			ArrayList tmpArray = new ArrayList ();
 			for (int j = 0; j < scores.Length - 1; j++) {
 				tmpArray.Add (scores [j]);

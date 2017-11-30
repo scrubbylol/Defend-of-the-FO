@@ -19,6 +19,8 @@ public class game_manager : MonoBehaviour {
 	public Text cashText;
 	public Text countdownText;
 	public int difficulty;
+	public GameObject gameOverText;
+	public int victory = 0;
 
 	public enemy_spawning spawner;
 
@@ -31,8 +33,12 @@ public class game_manager : MonoBehaviour {
 	private AudioSource audSource;
 	public AudioClip clickSound;
 	public AudioClip constructionSound;
+	public AudioClip upgradeSound;
+	public AudioClip finalUpgradeSound;
 	public AudioClip gameOverSound;
 	public AudioClip waveCompleteSound;
+	public AudioClip victorySound;
+
 
 	// Use this for initialization
 	void Start () {
@@ -40,12 +46,14 @@ public class game_manager : MonoBehaviour {
 		musicAudio.volume = PlayerPrefs.GetInt ("Music") / 100f;
 
 		SetOptionsSliders ();
+		gameOverText = GameObject.Find ("GameOver_Text");
 
+		gameOverText.SetActive (false);
 		audSource = GameObject.Find ("Main Camera").GetComponent<AudioSource> ();
 		//lives = 10;
 		score = 0;
-		//waves = 4;
-		//cash = 300;
+		//waves = 14;
+		//cash = 1000;
 		slimeBabiesAlive = 0;
 		newHighScore = false;
 
@@ -91,6 +99,10 @@ public class game_manager : MonoBehaviour {
 
 		if (waves != 5) {
 			if (alive == 0 && spawner.allEnemiesSpawned) {
+				if (waves == 15) {
+					victory = 1;
+					GameOver ();
+				}
 				return false;
 			} else {
 				return true;
@@ -121,6 +133,7 @@ public class game_manager : MonoBehaviour {
 
 		if (waves != 0) {
 			playWaveCompleteSound ();
+			AddCash (50);
 		}
 
 		countdownText.enabled = true;
@@ -143,12 +156,20 @@ public class game_manager : MonoBehaviour {
 	}
 
 	public void GameOver() {
-		playGameOverSound ();
 
+		gameOverText.SetActive (true);
+		if (victory == 1) {
+			playVictorySound ();
+			GameObject.Find ("go_text").GetComponent<Text> ().text = "Victory";
+		} else {
+			playGameOverSound ();
+		}
 		GameObject.Find ("GameOver_Text").GetComponent<Animation> ().Play ();
 		GameObject.Find ("Score_Back").GetComponent<RawImage> ().enabled = false;
 		GameObject.Find ("Lives_Cash_Back").GetComponent<RawImage> ().enabled = false;
+		if (GameObject.Find("Heart") != null)
 		GameObject.Find ("Heart").SetActive (false);
+		if (GameObject.Find("Money") != null)
 		GameObject.Find ("Money").SetActive (false);
 
 		scoreText.enabled = false;
@@ -165,11 +186,15 @@ public class game_manager : MonoBehaviour {
 		foreach (GameObject twr in towers) {
 			Destroy (twr);
 		}
+
+		GameObject[] Bullets = GameObject.FindGameObjectsWithTag ("Bullet");
+		foreach (GameObject twr in towers) {
+			Destroy (twr);
+		}
 			
 		//StartCoroutine (GetComponent<game_over> ().getHsFromDb ());
 		GetComponent<game_over> ().getHsFromPlayerPrefs ();
 	}
-
 	public void Retry() {
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 
@@ -194,6 +219,17 @@ public class game_manager : MonoBehaviour {
 
 	public void playGameOverSound() {
 		audSource.PlayOneShot (gameOverSound, PlayerPrefs.GetInt("Sound")/100f);
+	}
+	public void playUpgradeSound()
+	{
+		audSource.PlayOneShot (upgradeSound, PlayerPrefs.GetInt("Sound")/100f);
+	}
+	public void playFinalUpgradeSound()
+	{
+		audSource.PlayOneShot (finalUpgradeSound, PlayerPrefs.GetInt("Sound")/100f);
+	}
+	public void playVictorySound() {
+		audSource.PlayOneShot (victorySound, PlayerPrefs.GetInt("Sound")/100f);
 	}
 
 	public void playWaveCompleteSound() {

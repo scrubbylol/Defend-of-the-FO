@@ -19,6 +19,8 @@ public class tower_spawning : MonoBehaviour {
     private Button archer_select;
     private Button wizard_select;
     private GameObject tower_select;
+	public AudioClip upgradeSound;
+	public AudioClip finalUpgradeSound;
 
     // Use this for initialization
 
@@ -56,25 +58,30 @@ public class tower_spawning : MonoBehaviour {
             Debug.Log("Leveled Up");
             if (archer_tower.GetComponent<TowerData>().levels.IndexOf(archer_tower.GetComponent<TowerData>().CurrentLevel) == 1)
             {
-               gm.SubCash(100);
+				gm.playUpgradeSound ();
+				gm.SubCash(100);
             }
             else if (archer_tower.GetComponent<TowerData>().levels.IndexOf(archer_tower.GetComponent<TowerData>().CurrentLevel) == 2)
             {
-                gm.SubCash(200);
+				gm.playFinalUpgradeSound ();
+				gm.SubCash(200);
             }
             // TODO: Deduct gold
         }
         else if (canUpgradeWizardTower())
         {
+			
             wizard_tower.GetComponent<TowerData>().increaseLevel();
             Debug.Log("Leveled Up");
             if (wizard_tower.GetComponent<TowerData>().levels.IndexOf(wizard_tower.GetComponent<TowerData>().CurrentLevel) == 1)
             {
-                gm.SubCash(120);
+				gm.playUpgradeSound ();
+				gm.SubCash(120);
             }
             else if (wizard_tower.GetComponent<TowerData>().levels.IndexOf(wizard_tower.GetComponent<TowerData>().CurrentLevel) == 2)
             {
-                gm.SubCash(240);
+				gm.playFinalUpgradeSound ();
+				gm.SubCash(240);
             }
             // TODO: Deduct gold
         }
@@ -155,5 +162,5 @@ public class tower_spawning : MonoBehaviour {
         
         return false;
     }
-
+		
 }

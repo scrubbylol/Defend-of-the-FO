@@ -77,9 +77,10 @@ public class BulletBehaviour : MonoBehaviour {
                                     gm.slimeBabiesAlive -= 1;
                                 }
 
-                                if (!gm.CheckEnemiesAlive(1))
+								if (!gm.CheckEnemiesAlive(1) && gm.waves < 14)
                                 {
-                                    gm.StartCountDown();
+									Debug.Log ("STARTING COUNT DOWN");
+									gm.StartCountDown();
                                 }
                             }
                             i++;
@@ -101,7 +102,7 @@ public class BulletBehaviour : MonoBehaviour {
 						}
 							
 						if (!SceneManager.GetActiveScene ().name.Equals ("menu")) {
-							if (!gm.CheckEnemiesAlive (2)) {
+							if (!gm.CheckEnemiesAlive (2)  && gm.waves < 14) {
 								gm.StartCountDown();
 							}
 						}

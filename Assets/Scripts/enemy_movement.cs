@@ -120,7 +120,6 @@ public class enemy_movement : MonoBehaviour {
 							gm.StartCountDown();
 						}
 					}
-
 					if (gm.lives == 0) {
 						gm.GameOver ();
 					}
