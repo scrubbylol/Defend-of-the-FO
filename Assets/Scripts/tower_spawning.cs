@@ -145,7 +145,7 @@ public class tower_spawning : MonoBehaviour {
         wizard_tower = (GameObject)
           Instantiate(wizard_towerPrefab, transform.position, Quaternion.identity);
         //4
-        gm.SubCash(30);
+        gm.SubCash(50);
         archer_select.GetComponentInChildren<Button>().enabled = false;
         archer_select.GetComponentInChildren<Image>().enabled = false;
         archer_select.GetComponentInChildren<Text>().enabled = false;
@@ -171,7 +171,7 @@ public class tower_spawning : MonoBehaviour {
         archer_tower = (GameObject)
           Instantiate(archer_towerPrefab, transform.position, Quaternion.identity);
         //4
-        gm.SubCash(30);
+        gm.SubCash(50);
         archer_select.GetComponentInChildren<Button>().enabled = false;
         archer_select.GetComponentInChildren<Image>().enabled = false;
         archer_select.GetComponentInChildren<Text>().enabled = false;
@@ -198,7 +198,7 @@ public class tower_spawning : MonoBehaviour {
         splash_tower = (GameObject)
           Instantiate(splash_towerPrefab, transform.position, Quaternion.identity);
         //4
-        gm.SubCash(30);
+        gm.SubCash(50);
         archer_select.GetComponentInChildren<Button>().enabled = false;
         archer_select.GetComponentInChildren<Image>().enabled = false;
         archer_select.GetComponentInChildren<Text>().enabled = false;

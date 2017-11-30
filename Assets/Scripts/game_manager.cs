@@ -51,6 +51,7 @@ public class game_manager : MonoBehaviour {
 
 		gameOverText.SetActive (false);
 		audSource = GameObject.Find ("Main Camera").GetComponent<AudioSource> ();
+
 		//lives = 10;
 		score = 0;
 		//waves = 10;
