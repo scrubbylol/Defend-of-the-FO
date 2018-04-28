@@ -14,15 +14,15 @@ public class HealthBar : MonoBehaviour {
 		gm = GameObject.Find ("GameManager").GetComponent<game_manager> ();
 		originalScale = gameObject.transform.localScale.x;
 		if (gm.waves == 1) {
-			maxHealth = 70;
+			maxHealth = 35;
 		} else if (gm.waves == 2) {
-			maxHealth = 120;
+			maxHealth = 75;
 		} else if (gm.waves == 3) {
-			maxHealth = 250;
+			maxHealth = 130;
 		} else if (gm.waves == 4) {
-			maxHealth = 300;
+			maxHealth = 200;
 		} else if (gm.waves == 5) {
-			maxHealth = 350;
+			maxHealth = 280;
 			ob = gameObject.transform.parent.gameObject;
 			if (ob.name.Equals ("enemy6(Clone)")) {
 				maxHealth = 100;
